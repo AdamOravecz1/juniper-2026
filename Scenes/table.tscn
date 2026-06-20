@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c36ikowtc8t8m"]
+
+[ext_resource type="PackedScene" uid="uid://c1e2jjt6cj1yd" path="res://3D/table.blend" id="1_ix8et"]
+
+[node name="table" unique_id=597364654 instance=ExtResource("1_ix8et")]
