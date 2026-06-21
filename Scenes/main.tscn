@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c2xr8d3s3i6y0" path="res://Scenes/roulette.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://7ct7u6u33k7b" path="res://3D/figure.blend" id="3_8gbba"]
 
 [node name="Main" type="Node3D" unique_id=100720283]
 
@@ -22,3 +23,6 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 2.49
 light_energy = 10.0
 spot_range = 7.358712
 spot_angle = 65.542175
+
+[node name="figure" parent="." unique_id=329271652 instance=ExtResource("3_8gbba")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8798115, 2.7436104)
