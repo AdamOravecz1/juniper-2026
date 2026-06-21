@@ -11,8 +11,9 @@ var spin_speed := 25.0      # radians/sec at start
 var deceleration := 4.0     # how quickly it slows
 var spinning := false
 
-var result := 0
-var color := "green"
+var ball_stopped := true
+var result = null
+var color = null
 
 const color_table := {
 	0: "green",
@@ -54,10 +55,6 @@ const color_table := {
 	36: "red"
 }
 
-func _ready():
-	start_spin()
-	start_ball()
-
 func _physics_process(delta: float) -> void:
 	if spinning:
 		cylinder_001.rotate_y(spin_speed * delta)
@@ -70,22 +67,36 @@ func _physics_process(delta: float) -> void:
 			spin_speed = 0
 			spinning = false
 			
-	if ball.linear_velocity == Vector3.ZERO:
+	if ball.linear_velocity != Vector3.ZERO and ball_stopped:
+		ball_stopped = false
+	if ball.linear_velocity == Vector3.ZERO and not ball_stopped:
 		print(result, color)
+		get_parent().check_result()
+		ball_stopped = true
+
 
 func start_spin():
+	result = null
+	color = null
 	spin_speed = randf_range(20.0, 35.0)
 	spinning = true
 	
 
 func start_ball():
+	$Ball.freeze = false
+	$Ball.global_position = $BallStart.global_position
 	var base_dir := Vector3(0, 0, -1).normalized()  # fixed throw direction
 
 	var start_force := randf_range(0.4, 0.8)
 
 	ball.apply_impulse(base_dir * start_force)
 
-
 func _on_ball_area_area_entered(area: Area3D) -> void:
 	result = int(area.name)
 	color = color_table[result]
+
+
+func _on_ball_area_body_exited(body: Node3D) -> void:
+	if body == $Ball:
+		start_ball()
+		start_spin()

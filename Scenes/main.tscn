@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://lr8b6conl1fq"]
 
+[ext_resource type="Script" uid="uid://dtw3pbf1rj7yp" path="res://Scenes/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://c2xr8d3s3i6y0" path="res://Scenes/roulette.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
-[ext_resource type="PackedScene" uid="uid://7ct7u6u33k7b" path="res://3D/figure.blend" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://c0mad4vyehvbs" path="res://3D/100chip.blend" id="8_6iyac"]
+
+[sub_resource type="Environment" id="Environment_bo1nx"]
+background_mode = 1
+background_color = Color(0.99607843, 0.7137255, 0.5019608, 0.5764706)
+ambient_light_source = 1
 
 [node name="Main" type="Node3D" unique_id=100720283]
+script = ExtResource("1_8gbba")
 
 [node name="roulette" parent="." unique_id=701009001 instance=ExtResource("1_jjgbg")]
 
@@ -19,10 +26,91 @@ light_energy = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2459068, 0.2772007, 3.2459068)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=23427231]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 2.4995952, 3.9062996, 1.6928239)
+transform = Transform3D(1, 0, 0, 0, 0.5545975, 0.8321187, 0, -0.8321187, 0.5545975, 2.4995952, 3.9062996, 9.360865)
 light_energy = 10.0
-spot_range = 7.358712
-spot_angle = 65.542175
+spot_range = 14.912672
+spot_angle = 57.3459
 
-[node name="figure" parent="." unique_id=329271652 instance=ExtResource("3_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8798115, 2.7436104)
+[node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=1708330267]
+transform = Transform3D(1, 0, 0, 0, -0.44797757, 0.8940449, 0, -0.8940449, -0.44797757, 2.4995952, 3.9062996, -6.9596176)
+light_energy = 10.0
+spot_range = 14.912672
+spot_angle = 57.3459
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1684419318]
+transform = Transform3D(-0.2506504, 0.83217084, 0.49463737, 0, -0.510948, 0.85961163, 0.9680777, 0.21546203, 0.12806925, 3.2846546, 3.5454307, -2.5108962)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1690187108]
+environment = SubResource("Environment_bo1nx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=409428044]
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=236777769]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -532.0
+offset_top = -281.0
+offset_right = -475.0
+offset_bottom = -250.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "spin"
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1779424768]
+offset_left = 1066.0
+offset_top = 51.0
+offset_right = 1106.0
+offset_bottom = 74.0
+text = "50"
+
+[node name="Bet" type="Label" parent="CanvasLayer" unique_id=1370597761]
+offset_left = 1062.0
+offset_top = 467.0
+offset_right = 1102.0
+offset_bottom = 490.0
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="Up" type="Button" parent="CanvasLayer" unique_id=1512969428]
+offset_left = 1055.0
+offset_top = 438.0
+offset_right = 1084.0
+offset_bottom = 469.0
+text = "up"
+
+[node name="Down" type="Button" parent="CanvasLayer" unique_id=1855433345]
+offset_left = 1049.0
+offset_top = 508.0
+offset_right = 1100.0
+offset_bottom = 539.0
+text = "down"
+
+[node name="1ChipHolder" type="Node3D" parent="." unique_id=1765813661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4929875, 0.45016485, 1.7134957)
+
+[node name="5ChipHolder" type="Node3D" parent="." unique_id=1485946743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4929875, 0.45016485, 1.9546871)
+
+[node name="25ChipHolder" type="Node3D" parent="." unique_id=1828544318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.197)
+
+[node name="50ChipHolder" type="Node3D" parent="." unique_id=487042480]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.439)
+
+[node name="100ChipHolder" type="Node3D" parent="." unique_id=1012043411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.681)
+
+[node name="100chip" parent="100ChipHolder" unique_id=225160684 instance=ExtResource("8_6iyac")]
+
+[node name="Red" type="Node3D" parent="." unique_id=109042415]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 2.8413079)
+
+[node name="Black" type="Node3D" parent="." unique_id=589488021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 3.2095218)
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]
+[connection signal="pressed" from="CanvasLayer/Down" to="." method="_on_down_pressed"]

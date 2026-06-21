@@ -1,5 +1,27 @@
 [gd_scene format=3 uid="uid://c36ikowtc8t8m"]
 
 [ext_resource type="PackedScene" uid="uid://c1e2jjt6cj1yd" path="res://3D/table.blend" id="1_ix8et"]
+[ext_resource type="Script" uid="uid://b8kwrbc04r2k4" path="res://Scenes/table.gd" id="2_4ppvu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r4jc3"]
+size = Vector3(0.17118835, 0.037963867, 0.3369751)
 
 [node name="table" unique_id=597364654 instance=ExtResource("1_ix8et")]
+script = ExtResource("2_4ppvu")
+
+[node name="Red" type="Area3D" parent="." index="8" unique_id=1948538727]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1861722, 0, -0.3939071)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Red" index="0" unique_id=1063878169]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004020691, 0.17584229, 0.0005798638)
+shape = SubResource("BoxShape3D_r4jc3")
+
+[node name="Black" type="Area3D" parent="." index="9" unique_id=1148487405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1861722, 0, -0.033391684)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Black" index="0" unique_id=1524430545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004020691, 0.17584229, 0.0005798638)
+shape = SubResource("BoxShape3D_r4jc3")
+
+[connection signal="input_event" from="Red" to="." method="_on_red_input_event"]
+[connection signal="input_event" from="Black" to="." method="_on_black_input_event"]
