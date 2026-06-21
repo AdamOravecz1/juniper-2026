@@ -15,6 +15,12 @@ run/main_scene="uid://lr8b6conl1fq"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/mode=3
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
+
 [physics]
 
 common/physics_ticks_per_second=120

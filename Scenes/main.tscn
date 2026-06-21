@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dtw3pbf1rj7yp" path="res://Scenes/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://c2xr8d3s3i6y0" path="res://Scenes/roulette.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
-[ext_resource type="PackedScene" uid="uid://c0mad4vyehvbs" path="res://3D/100chip.blend" id="8_6iyac"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
@@ -103,13 +102,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.439)
 [node name="100ChipHolder" type="Node3D" parent="." unique_id=1012043411]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.681)
 
-[node name="100chip" parent="100ChipHolder" unique_id=225160684 instance=ExtResource("8_6iyac")]
-
 [node name="Red" type="Node3D" parent="." unique_id=109042415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 2.8413079)
 
 [node name="Black" type="Node3D" parent="." unique_id=589488021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 3.2095218)
+
+[node name="Odd" type="Node3D" parent="." unique_id=594733639]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 3.5749094)
+
+[node name="Even" type="Node3D" parent="." unique_id=315277129]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 2.4836097)
+
+[node name="1to18" type="Node3D" parent="." unique_id=974376477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 2.1219954)
+
+[node name="19to36" type="Node3D" parent="." unique_id=988775049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 3.9462087)
+
+[node name="1st12" type="Node3D" parent="." unique_id=1510726743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25627175, 0.45, 2.312488)
+
+[node name="2nd12" type="Node3D" parent="." unique_id=968988038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25627175, 0.45, 3.0324876)
+
+[node name="3rd12" type="Node3D" parent="." unique_id=1182248250]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25627175, 0.45, 3.749258)
+
+[node name="Column1" type="Node3D" parent="." unique_id=1824217876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48228052, 0.45, 4.204504)
+
+[node name="Column2" type="Node3D" parent="." unique_id=1014522781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7438047, 0.45, 4.204504)
+
+[node name="Column3" type="Node3D" parent="." unique_id=1817747056]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9988718, 0.45, 4.204504)
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]

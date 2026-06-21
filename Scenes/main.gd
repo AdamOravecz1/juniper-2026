@@ -6,40 +6,158 @@ extends Node3D
 @onready var chip50 = preload("res://3D/50chip.blend")
 @onready var chip100 = preload("res://3D/100chip.blend")
 
-@onready var _1_chip_holder: Node3D = $"1ChipHolder"
-@onready var _5_chip_holder: Node3D = $"5ChipHolder"
-@onready var _25_chip_holder: Node3D = $"25ChipHolder"
-@onready var _50_chip_holder: Node3D = $"50ChipHolder"
-@onready var _100_chip_holder: Node3D = $"100ChipHolder"
+@onready var _1_chip_holder = $"1ChipHolder"
+@onready var _5_chip_holder = $"5ChipHolder"
+@onready var _25_chip_holder = $"25ChipHolder"
+@onready var _50_chip_holder = $"50ChipHolder"
+@onready var _100_chip_holder = $"100ChipHolder"
 
-@onready var red: Node3D = $Red
-@onready var black: Node3D = $Black
+@onready var red = $Red
+@onready var black = $Black
+@onready var odd = $Odd
+@onready var even = $Even
+
+@onready var low = $"1to18"
+@onready var high = $"19to36"
+
+@onready var first12 = $"1st12"
+@onready var second12 = $"2nd12"
+@onready var third12 = $"3rd12"
+
+@onready var col1 = $Column1
+@onready var col2 = $Column2
+@onready var col3 = $Column3
 
 
-var bet_amount := 0
 var money := 50
-var bet = null
+var bet_amount := 0
+
+var bets = {
+	"red":0,
+	"black":0,
+	"odd":0,
+	"even":0,
+	"low":0,
+	"high":0,
+	"first12":0,
+	"second12":0,
+	"third12":0,
+	"col1":0,
+	"col2":0,
+	"col3":0
+}
 
 const STACK_HEIGHT := 0.018
 
 
 func _ready():
-	update_holder_chips()
-	update_bet_chips()
+	update_all()
 
 
-func _on_button_pressed() -> void:
-	if $roulette.color and bet:
-		$roulette.start_spin()
-		$roulette.start_ball()
+func _on_button_pressed():
+
+	if $roulette.ball_stopped:
+
+		var total := 0
+
+		for b in bets.values():
+			total += b
+
+		if total > 0:
+			$roulette.start_spin()
+			$roulette.start_ball()
 
 
 func check_result():
-	if $roulette.color == bet:
-		money += bet_amount * 2
+
+	var n = $roulette.result
+
+	if $roulette.color == "red":
+		money += bets.red * 2
+
+	elif $roulette.color == "black":
+		money += bets.black * 2
+
+
+	if n != 0:
+
+		if n % 2 == 0:
+			money += bets.even * 2
+		else:
+			money += bets.odd * 2
+
+
+		if n <= 18:
+			money += bets.low * 2
+		else:
+			money += bets.high * 2
+
+
+		if n <= 12:
+			money += bets.first12 * 3
+		elif n <= 24:
+			money += bets.second12 * 3
+		else:
+			money += bets.third12 * 3
+
+
+		match ((n - 1) % 3):
+
+			0:
+				money += bets.col1 * 3
+
+			1:
+				money += bets.col2 * 3
+
+			2:
+				money += bets.col3 * 3
+
+
+	for key in bets:
+		bets[key] = 0
+
+
+	update_all()
+
+
+func _on_up_pressed():
+
+	if money > 0:
+		money -= 1
+		bet_amount += 1
+		update_all()
+
+
+func _on_down_pressed():
+
+	if bet_amount > 0:
+		bet_amount -= 1
+		money += 1
+		update_all()
+
+
+func place_bet(name):
+
+	if bet_amount <= 0:
+		return
+
+	bets[name] += bet_amount
 
 	bet_amount = 0
-	bet = null
+
+	update_all()
+
+
+func remove_bet(name):
+
+	money += bets[name]
+
+	bets[name] = 0
+
+	update_all()
+
+
+func update_all():
 
 	update_holder_chips()
 	update_bet_chips()
@@ -48,34 +166,41 @@ func check_result():
 	$CanvasLayer/Label.text = str(money)
 
 
-func _on_up_pressed() -> void:
-	if money > 0:
-		money -= 1
-		bet_amount += 1
+func update_bet_chips():
 
-		if bet:
-			update_holder_chips()
-		update_bet_chips()
+	var mapping = {
+		"red": red,
+		"black": black,
+		"odd": odd,
+		"even": even,
+		"low": low,
+		"high": high,
+		"first12": first12,
+		"second12": second12,
+		"third12": third12,
+		"col1": col1,
+		"col2": col2,
+		"col3": col3
+	}
 
-		$CanvasLayer/Bet.text = str(bet_amount)
-		$CanvasLayer/Label.text = str(money)
+
+	for node in mapping.values():
+
+		for child in node.get_children():
+
+			child.queue_free()
 
 
-func _on_down_pressed() -> void:
-	if bet_amount > 0:
-		bet_amount -= 1
-		money += 1
+	for key in bets.keys():
 
-		if bet:
-			update_holder_chips()
-
-		update_bet_chips()
-
-		$CanvasLayer/Bet.text = str(bet_amount)
-		$CanvasLayer/Label.text = str(money)
+		render_value(
+			mapping[key],
+			bets[key]
+		)
 
 
 func update_holder_chips():
+
 	clear_holder()
 
 	render_chips(_100_chip_holder, money / 100, chip100)
@@ -85,30 +210,16 @@ func update_holder_chips():
 	render_chips(_1_chip_holder, money % 5, chip1)
 
 
-func update_bet_chips():
+func render_value(parent, amount):
 
-	for child in red.get_children():
-		child.queue_free()
+	var values = [100,50,25,5,1]
 
-	for child in black.get_children():
-		child.queue_free()
-
-	if bet == "red":
-		render_value(red, bet_amount)
-
-	elif bet == "black":
-		render_value(black, bet_amount)
-
-
-func render_value(parent: Node3D, amount: int):
-
-	var values = [100, 50, 25, 5, 1]
 	var scenes = {
-		100: chip100,
-		50: chip50,
-		25: chip25,
-		5: chip5,
-		1: chip1
+		100:chip100,
+		50:chip50,
+		25:chip25,
+		5:chip5,
+		1:chip1
 	}
 
 	var height := 0.0
@@ -123,14 +234,18 @@ func render_value(parent: Node3D, amount: int):
 
 			parent.add_child(chip)
 
-			chip.position = Vector3(0, height, 0)
+			chip.position = Vector3(
+				0,
+				height,
+				0
+			)
 
 			height += STACK_HEIGHT
 
 		amount %= value
 
 
-func render_chips(parent: Node3D, amount: int, scene):
+func render_chips(parent, amount, scene):
 
 	for i in amount:
 
