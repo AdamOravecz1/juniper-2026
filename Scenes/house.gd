@@ -21,6 +21,9 @@ func hit(damage):
 		get_parent().get_parent().figures.erase(pos)
 		queue_free()
 		
+func heal():
+	health = 3
+		
 func move():
 	spawn_counter -= 1
 	if spawn_counter <= 0:

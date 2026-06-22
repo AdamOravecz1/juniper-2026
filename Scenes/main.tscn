@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dtw3pbf1rj7yp" path="res://Scenes/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://c2xr8d3s3i6y0" path="res://Scenes/roulette.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://32nhmn2y6hne" path="res://Scenes/card.tscn" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://dy4gftelds18k" path="res://Textures/+1_card.png" id="5_21xkr"]
+[ext_resource type="Texture2D" uid="uid://fv1f3bw3t6gb" path="res://Textures/2x_card.png" id="6_6bp64"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
@@ -91,6 +94,13 @@ offset_right = 1100.0
 offset_bottom = 539.0
 text = "down"
 
+[node name="Button2" type="Button" parent="CanvasLayer" unique_id=552202223]
+offset_left = 47.0
+offset_top = 89.0
+offset_right = 74.0
+offset_bottom = 120.0
+text = "ok"
+
 [node name="1ChipHolder" type="Node3D" parent="." unique_id=1765813661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4929875, 0.45016485, 1.7134957)
 
@@ -145,6 +155,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9988718, 0.45, 4.204504)
 [node name="OnePos" type="Node3D" parent="." unique_id=1189753072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48349482, 0.45, 2.042724)
 
+[node name="card" parent="." unique_id=1897013429 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -0.49569803, 0.44754118, 3.512047)
+look = ExtResource("5_21xkr")
+
+[node name="card2" parent="." unique_id=255910286 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -0.49569803, 0.44754118, 3.7881052)
+look = ExtResource("6_6bp64")
+effect_type = 1
+effect_value = 2
+
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]
 [connection signal="pressed" from="CanvasLayer/Down" to="." method="_on_down_pressed"]
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]

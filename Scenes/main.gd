@@ -34,6 +34,9 @@ extends Node3D
 
 var figures = {}
 
+var result := -1
+var color: String
+
 var money := 50
 var bet_amount := 0
 
@@ -52,13 +55,51 @@ var bets = {
 	"col3":0
 }
 
+const color_table := {
+	0: "green",
+	1: "red",
+	2: "black",
+	3: "red",
+	4: "black",
+	5: "red",
+	6: "black",
+	7: "red",
+	8: "black",
+	9: "red",
+	10: "black",
+	11: "black",
+	12: "red",
+	13: "black",
+	14: "red",
+	15: "black",
+	16: "red",
+	17: "black",
+	18: "red",
+	19: "black",
+	20: "black",
+	21: "red",
+	22: "black",
+	23: "red",
+	24: "black",
+	25: "red",
+	26: "black",
+	27: "red",
+	28: "red",
+	29: "black",
+	30: "red",
+	31: "black",
+	32: "red",
+	33: "black",
+	34: "red",
+	35: "black",
+	36: "red"
+}
+
 const STACK_HEIGHT := 0.018
 
 
 func _ready():
 	update_all()
-	place_figure(32, sword_model, "enemy")
-	place_figure(11, bow_model, "player")
 	
 func _on_button_pressed():
 	print(figures)
@@ -75,14 +116,17 @@ func _on_button_pressed():
 			$roulette.start_ball()
 
 
+
+
 func check_result():
 
-	var n = $roulette.result
+	var n = result
+	
 
-	if $roulette.color == "red":
+	if color_table[n] == "red":
 		money += bets.red * 2
 
-	elif $roulette.color == "black":
+	elif color_table[n] == "black":
 		money += bets.black * 2
 
 
@@ -126,8 +170,10 @@ func check_result():
 
 	update_all()
 	
-	#if n != 0:
-		#place_figure(n, sword_model, "player")
+	if n != 0:
+		place_figure(n, sword_model, "player")
+		
+	result = -1
 	
 	for i in $Figures.get_children():
 		if i.has_method("move"):
@@ -347,3 +393,32 @@ func _on_figure_moved_finished(new_tile, figure):
 	
 func spawn_guy(n, side):
 	place_figure(n, sword_model, side)
+	
+func heal_area(n):
+	if figures.has(n):
+		figures[n].heal()
+	if figures.has(n + 1):
+		figures[n + 1].heal()
+	if figures.has(n - 1):
+		figures[n - 1].heal()
+	if figures.has(n + 3):
+		figures[n + 3].heal()
+	if figures.has(n - 3):
+		figures[n - 3].heal()
+	
+func damage_area(n):
+	if figures.has(n):
+		figures[n].hit(3)
+	if figures.has(n + 1):
+		figures[n + 1].hit(3)
+	if figures.has(n - 1):
+		figures[n - 1].hit(3)
+	if figures.has(n + 3):
+		figures[n + 3].hit(3)
+	if figures.has(n - 3):
+		figures[n - 3].hit(3)
+
+
+func _on_button_2_pressed() -> void:
+	if result >= 0:
+		check_result()

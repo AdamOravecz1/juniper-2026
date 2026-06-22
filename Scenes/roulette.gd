@@ -12,48 +12,10 @@ var deceleration := 4.0     # how quickly it slows
 var spinning := false
 
 var ball_stopped := true
-var result = null
+var result = -1
 var color = null
 
-const color_table := {
-	0: "green",
-	1: "red",
-	2: "black",
-	3: "red",
-	4: "black",
-	5: "red",
-	6: "black",
-	7: "red",
-	8: "black",
-	9: "red",
-	10: "black",
-	11: "black",
-	12: "red",
-	13: "black",
-	14: "red",
-	15: "black",
-	16: "red",
-	17: "black",
-	18: "red",
-	19: "black",
-	20: "black",
-	21: "red",
-	22: "black",
-	23: "red",
-	24: "black",
-	25: "red",
-	26: "black",
-	27: "red",
-	28: "red",
-	29: "black",
-	30: "red",
-	31: "black",
-	32: "red",
-	33: "black",
-	34: "red",
-	35: "black",
-	36: "red"
-}
+
 
 func _physics_process(delta: float) -> void:
 	if spinning:
@@ -70,14 +32,13 @@ func _physics_process(delta: float) -> void:
 	if ball.linear_velocity != Vector3.ZERO and ball_stopped:
 		ball_stopped = false
 	if ball.linear_velocity == Vector3.ZERO and not ball_stopped:
-		print(result, color)
-		get_parent().check_result()
 		ball_stopped = true
 		await get_tree().create_timer(.5).timeout
 
 
 func start_spin():
-	result = null
+	result = -1
+	get_parent().result = -1
 	color = null
 	spin_speed = randf_range(20.0, 35.0)
 	spinning = true
@@ -93,8 +54,9 @@ func start_ball():
 	ball.apply_impulse(base_dir * start_force)
 
 func _on_ball_area_area_entered(area: Area3D) -> void:
-	result = int(area.name)
-	color = color_table[result]
+	if area.name != "BallArea":
+		result = int(area.name)
+		get_parent().result = int(area.name)
 
 
 func _on_ball_area_body_exited(body: Node3D) -> void:
