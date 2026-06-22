@@ -73,6 +73,7 @@ func _physics_process(delta: float) -> void:
 		print(result, color)
 		get_parent().check_result()
 		ball_stopped = true
+		await get_tree().create_timer(.5).timeout
 
 
 func start_spin():

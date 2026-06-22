@@ -8,6 +8,7 @@ extends Node3D
 
 @onready var house_model = preload("res://Scenes/house.tscn")
 @onready var sword_model = preload("res://Scenes/sword_guy.tscn")
+@onready var bow_model = preload("res://Scenes/bow_guy.tscn")
 
 @onready var _1_chip_holder = $"1ChipHolder"
 @onready var _5_chip_holder = $"5ChipHolder"
@@ -55,10 +56,12 @@ const STACK_HEIGHT := 0.018
 
 
 func _ready():
-	place_figure(5, sword_model)
 	update_all()
-
+	place_figure(32, sword_model, "enemy")
+	place_figure(11, bow_model, "player")
+	
 func _on_button_pressed():
+	print(figures)
 
 	if $roulette.ball_stopped:
 
@@ -123,10 +126,13 @@ func check_result():
 
 	update_all()
 	
-	if n != 0:
-		place_figure(8, sword_model)
+	#if n != 0:
+		#place_figure(n, sword_model, "player")
 	
 	for i in $Figures.get_children():
+		if i.has_method("move"):
+			await i.move()
+	for i in $Buildings.get_children():
 		if i.has_method("move"):
 			await i.move()
 	
@@ -286,7 +292,7 @@ func clear_holder():
 			child.queue_free()
 			
 
-func place_figure(tile_number, model):
+func place_figure(tile_number, model, side):
 
 	# remove old house if exists
 	if figures.has(tile_number):
@@ -296,10 +302,15 @@ func place_figure(tile_number, model):
 
 
 	var figure = model.instantiate()
-
-	$Figures.add_child(figure)
+	figure.side = side
 	
-	figure.moved_finished.connect(_on_figure_moved_finished.bind(figure))
+	if model == sword_model:
+		$Figures.add_child(figure)
+	else:
+		$Buildings.add_child(figure)
+	
+	if figure.has_signal("moved_finished"):
+		figure.moved_finished.connect(_on_figure_moved_finished.bind(figure))
 
 	figure.pos = tile_number
 
@@ -333,3 +344,6 @@ func _on_figure_moved_finished(new_tile, figure):
 
 	# add new entry
 	figures[new_tile] = figure
+	
+func spawn_guy(n, side):
+	place_figure(n, sword_model, side)

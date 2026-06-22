@@ -14,14 +14,18 @@ func _ready() -> void:
 	$Sphere.material_override = $Sphere.material_override.duplicate()
 	$Cylinder.material_override = $Cylinder.material_override.duplicate()
 	$Cylinder_001.material_override = $Cylinder_001.material_override.duplicate()
+	$Cylinder_002.material_override = $Cylinder_002.material_override.duplicate()
+	
 	if side == "player":
 		$Sphere.material_override.albedo_color = Color(0.0, 0.475, 1.0, 1.0)
 		$Cylinder.material_override.albedo_color = Color(0.0, 0.475, 1.0, 1.0)
 		$Cylinder_001.material_override.albedo_color = Color(0.0, 0.475, 1.0, 1.0)
+		$Cylinder_002.material_override.albedo_color = Color(0.0, 0.475, 1.0, 1.0)
 	else:
 		$Sphere.material_override.albedo_color = Color(1.0, 0.282, 0.0, 1.0)
 		$Cylinder.material_override.albedo_color = Color(1.0, 0.282, 0.0, 1.0)
 		$Cylinder_001.material_override.albedo_color = Color(1.0, 0.282, 0.0, 1.0)
+		$Cylinder_002.material_override.albedo_color = Color(1.0, 0.282, 0.0, 1.0)
 		rotation.y = deg_to_rad(180)
 		tile_size = Vector3(0, 0, -0.184)
 
@@ -36,10 +40,23 @@ func hit(damage):
 func move():
 	var next_tile: int
 	if side == "player":
+		next_tile = pos + 6
+	else:
+		next_tile = pos - 6
+
+	# check if occupied
+	if get_parent().get_parent().figures.has(next_tile):
+		if get_parent().get_parent().figures[next_tile].side != side:
+			if get_parent().get_parent().figures[next_tile].has_method("hit"):
+				animation_player.play("Hit")
+				await $AnimationPlayer.animation_finished
+				get_parent().get_parent().figures[next_tile].hit(1)
+		return # blocked, do nothing
+		
+	if side == "player":
 		next_tile = pos + 3
 	else:
 		next_tile = pos - 3
-
 	# check if occupied
 	if get_parent().get_parent().figures.has(next_tile):
 		if get_parent().get_parent().figures[next_tile].side != side:

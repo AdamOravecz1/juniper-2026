@@ -14,6 +14,8 @@ script = ExtResource("1_8gbba")
 
 [node name="Figures" type="Node3D" parent="." unique_id=1023462105]
 
+[node name="Buildings" type="Node3D" parent="." unique_id=1727461116]
+
 [node name="roulette" parent="." unique_id=701009001 instance=ExtResource("1_jjgbg")]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=271975757]

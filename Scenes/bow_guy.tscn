@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cnfsjox2xulji"]
+
+[ext_resource type="PackedScene" uid="uid://cm1by63d38cbg" path="res://3D/bow_guy.blend" id="1_ik1fl"]
+[ext_resource type="Script" uid="uid://cohbob16xb7qg" path="res://Scenes/bow_guy.gd" id="2_tyitm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyitm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ub01"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kcvt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7wj7m"]
+
+[node name="bow_guy" unique_id=381209943 instance=ExtResource("1_ik1fl")]
+script = ExtResource("2_tyitm")
+
+[node name="Sphere" parent="." index="0" unique_id=399105488]
+material_override = SubResource("StandardMaterial3D_tyitm")
+
+[node name="Cylinder" parent="." index="1" unique_id=228921623]
+material_override = SubResource("StandardMaterial3D_0ub01")
+
+[node name="Cylinder_001" parent="." index="2" unique_id=58087085]
+material_override = SubResource("StandardMaterial3D_4kcvt")
+
+[node name="Cylinder_002" parent="." index="3" unique_id=304906383]
+material_override = SubResource("StandardMaterial3D_7wj7m")
