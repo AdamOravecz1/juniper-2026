@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bfqo68gcrx0kh"]
+
+[ext_resource type="PackedScene" uid="uid://dx5df3p8kxqk5" path="res://3D/house.blend" id="1_okrnj"]
+[ext_resource type="Script" uid="uid://dge53acukjp0c" path="res://Scenes/house.gd" id="2_n87ef"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jr7h"]
+
+[node name="house" unique_id=631369812 instance=ExtResource("1_okrnj")]
+script = ExtResource("2_n87ef")
+
+[node name="Cube_002" parent="." index="0" unique_id=723601074]
+material_override = SubResource("StandardMaterial3D_3jr7h")

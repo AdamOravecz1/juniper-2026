@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://7ct7u6u33k7b"
-path="res://.godot/imported/figure.blend-d545bce3164336d7128ac92b2ec531e2.scn"
+path="res://.godot/imported/sword_guy.blend-bf50465c1b786040a5c81c7206cefa15.scn"
 
 [deps]
 
-source_file="res://3D/figure.blend"
-dest_files=["res://.godot/imported/figure.blend-d545bce3164336d7128ac92b2ec531e2.scn"]
+source_file="res://3D/sword_guy.blend"
+dest_files=["res://.godot/imported/sword_guy.blend-bf50465c1b786040a5c81c7206cefa15.scn"]
 
 [params]
 

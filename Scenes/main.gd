@@ -6,6 +6,9 @@ extends Node3D
 @onready var chip50 = preload("res://3D/50chip.blend")
 @onready var chip100 = preload("res://3D/100chip.blend")
 
+@onready var house_model = preload("res://Scenes/house.tscn")
+@onready var sword_model = preload("res://Scenes/sword_guy.tscn")
+
 @onready var _1_chip_holder = $"1ChipHolder"
 @onready var _5_chip_holder = $"5ChipHolder"
 @onready var _25_chip_holder = $"25ChipHolder"
@@ -28,6 +31,7 @@ extends Node3D
 @onready var col2 = $Column2
 @onready var col3 = $Column3
 
+var figures = {}
 
 var money := 50
 var bet_amount := 0
@@ -51,8 +55,8 @@ const STACK_HEIGHT := 0.018
 
 
 func _ready():
+	place_figure(5, sword_model)
 	update_all()
-
 
 func _on_button_pressed():
 
@@ -118,6 +122,15 @@ func check_result():
 
 
 	update_all()
+	
+	if n != 0:
+		place_figure(8, sword_model)
+	
+	for i in $Figures.get_children():
+		if i.has_method("move"):
+			await i.move()
+	
+
 
 
 func _on_up_pressed():
@@ -271,3 +284,52 @@ func clear_holder():
 	]:
 		for child in holder.get_children():
 			child.queue_free()
+			
+
+func place_figure(tile_number, model):
+
+	# remove old house if exists
+	if figures.has(tile_number):
+
+		if is_instance_valid(figures[tile_number]):
+			figures[tile_number].queue_free()
+
+
+	var figure = model.instantiate()
+
+	$Figures.add_child(figure)
+	
+	figure.moved_finished.connect(_on_figure_moved_finished.bind(figure))
+
+	figure.pos = tile_number
+
+
+	var start = $OnePos.global_position
+
+	var cols = 3
+
+	var x = (tile_number - 1) % cols
+	var z = (tile_number - 1) / cols
+
+	var tile_size_x = 0.259
+	var tile_size_z = 0.184
+
+
+	figure.global_position = start + Vector3(
+		x * tile_size_x,
+		0,
+		z * tile_size_z
+	)
+
+	figures[tile_number] = figure
+	
+func _on_figure_moved_finished(new_tile, figure):
+
+	# remove old entry
+	for key in figures.keys():
+		if figures[key] == figure:
+			figures.erase(key)
+			break
+
+	# add new entry
+	figures[new_tile] = figure

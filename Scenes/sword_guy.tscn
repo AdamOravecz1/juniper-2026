@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dorbl3uaiyvw6"]
+
+[ext_resource type="PackedScene" uid="uid://7ct7u6u33k7b" path="res://3D/sword_guy.blend" id="1_h3qtf"]
+[ext_resource type="Script" uid="uid://btuvc0vvsgnsn" path="res://Scenes/sword_guy.gd" id="2_c70or"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5e2gm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_725tx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6hxi"]
+
+[node name="sword_guy" unique_id=2027796040 instance=ExtResource("1_h3qtf")]
+script = ExtResource("2_c70or")
+
+[node name="Sphere" parent="." index="0" unique_id=2141451989]
+material_override = SubResource("StandardMaterial3D_5e2gm")
+
+[node name="Cylinder" parent="." index="1" unique_id=1439979939]
+material_override = SubResource("StandardMaterial3D_725tx")
+
+[node name="Cylinder_001" parent="." index="2" unique_id=1862492914]
+material_override = SubResource("StandardMaterial3D_f6hxi")
