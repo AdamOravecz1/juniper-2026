@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 		ball_stopped = false
 	if ball.linear_velocity == Vector3.ZERO and not ball_stopped:
 		ball_stopped = true
+		get_parent().result = result
 		await get_tree().create_timer(.5).timeout
 
 
@@ -56,7 +57,7 @@ func start_ball():
 func _on_ball_area_area_entered(area: Area3D) -> void:
 	if area.name != "BallArea":
 		result = int(area.name)
-		get_parent().result = int(area.name)
+		
 
 
 func _on_ball_area_body_exited(body: Node3D) -> void:

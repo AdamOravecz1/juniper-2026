@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://32nhmn2y6hne" path="res://Scenes/card.tscn" id="4_jjvhh"]
 [ext_resource type="Texture2D" uid="uid://dy4gftelds18k" path="res://Textures/+1_card.png" id="5_21xkr"]
-[ext_resource type="Texture2D" uid="uid://fv1f3bw3t6gb" path="res://Textures/2x_card.png" id="6_6bp64"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
@@ -116,6 +115,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.439)
 [node name="100ChipHolder" type="Node3D" parent="." unique_id=1012043411]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.45, 2.681)
 
+[node name="CardPile" type="Node3D" parent="." unique_id=2063845854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.44767004, 4.1878967)
+
+[node name="card" parent="CardPile" unique_id=1897013429 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, -0.9151139)
+look = ExtResource("5_21xkr")
+
+[node name="card2" parent="CardPile" unique_id=1990609015 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, -0.6624813)
+look = ExtResource("5_21xkr")
+
+[node name="card3" parent="CardPile" unique_id=450895368 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, -0.40638828)
+look = ExtResource("5_21xkr")
+
 [node name="Red" type="Node3D" parent="." unique_id=109042415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 2.8413079)
 
@@ -155,15 +169,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9988718, 0.45, 4.204504)
 [node name="OnePos" type="Node3D" parent="." unique_id=1189753072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48349482, 0.45, 2.042724)
 
-[node name="card" parent="." unique_id=1897013429 instance=ExtResource("4_jjvhh")]
-transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -0.49569803, 0.44754118, 3.512047)
-look = ExtResource("5_21xkr")
+[node name="Label3D" type="Label3D" parent="." unique_id=330186714]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -0.7690468, 0.44830102, 3.276256)
+text = "00"
 
-[node name="card2" parent="." unique_id=255910286 instance=ExtResource("4_jjvhh")]
-transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -0.49569803, 0.44754118, 3.7881052)
-look = ExtResource("6_6bp64")
-effect_type = 1
-effect_value = 2
+[node name="Label3D2" type="Label3D" parent="." unique_id=1286922121]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -0.7690468, 0.44830102, 3.528422)
+text = "00"
+
+[node name="Label3D3" type="Label3D" parent="." unique_id=1769017643]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -0.7690468, 0.44830102, 3.7828398)
+text = "00"
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]

@@ -10,6 +10,8 @@ extends Node3D
 @onready var sword_model = preload("res://Scenes/sword_guy.tscn")
 @onready var bow_model = preload("res://Scenes/bow_guy.tscn")
 
+@onready var card_model = preload("res://Scenes/card.tscn")
+
 @onready var _1_chip_holder = $"1ChipHolder"
 @onready var _5_chip_holder = $"5ChipHolder"
 @onready var _25_chip_holder = $"25ChipHolder"
@@ -422,3 +424,62 @@ func damage_area(n):
 func _on_button_2_pressed() -> void:
 	if result >= 0:
 		check_result()
+	
+
+
+func draw_card(pos, type, value, text):
+	var card = card_model.instantiate()
+
+	card.rotation.y = deg_to_rad(270)
+	card.rotation.z = deg_to_rad(180)
+	
+	card.effect_type = card.EffectType["ADD"] if type == "add" else card.EffectType["MULTIPLY"]
+	card.effect_value = value
+	card.look = text
+	card.cost = randi_range(1, 10)
+	
+
+	$CardPile.add_child(card)
+	var tween = get_tree().create_tween()
+	var lift = card.global_position + Vector3(0, 0.3, 0)
+	# pick up
+	tween.tween_property(card,"global_position",lift,0.2)
+	# move toward middle
+	var middle = (card.global_position +pos) / 2
+	middle.y += 0.4
+	tween.tween_property(card,"global_position",middle,0.3)
+	# flip
+	tween.parallel().tween_property(card,"rotation_degrees:z",0,0.3)
+	# place on destination
+	tween.tween_property(card,"global_position",pos,0.25)
+	# settle
+	tween.tween_property(card,"rotation_degrees:x",0,0.08)
+	
+	await tween.finished
+	
+	var labels = [
+		$Label3D,
+		$Label3D2,
+		$Label3D3
+	]
+
+	var closest_label = null
+	var closest_dist = INF
+
+	for label in labels:
+
+		var dist = label.global_position.distance_to(card.global_position)
+
+		if dist < closest_dist:
+			closest_dist = dist
+			closest_label = label
+
+
+	if closest_label:
+		closest_label.text = str(card.cost)
+
+	return card
+		
+func pay(n):
+	money -= n
+	update_all()
