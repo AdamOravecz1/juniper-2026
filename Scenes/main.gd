@@ -102,6 +102,7 @@ const STACK_HEIGHT := 0.018
 
 func _ready():
 	update_all()
+	$dealer.deal()
 	
 func _on_button_pressed():
 	print(figures)

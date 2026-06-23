@@ -5,11 +5,24 @@
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://32nhmn2y6hne" path="res://Scenes/card.tscn" id="4_jjvhh"]
 [ext_resource type="Texture2D" uid="uid://dy4gftelds18k" path="res://Textures/+1_card.png" id="5_21xkr"]
+[ext_resource type="PackedScene" uid="uid://cibwybqj6bkkv" path="res://Scenes/dealer.tscn" id="6_21xkr"]
+[ext_resource type="Texture2D" uid="uid://c6rsqrgjodfvu" path="res://Textures/Stanton - Livonia, MI The Flooring Company LLC.png" id="7_6bp64"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
-background_color = Color(0.99607843, 0.7137255, 0.5019608, 0.5764706)
-ambient_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_344ge"]
+albedo_texture = ExtResource("7_6bp64")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_21xkr"]
+size = Vector2(332, 287)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bp64"]
+albedo_color = Color(0.8431839, 0.8431839, 0.84318376, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6bp64"]
+size = Vector2(100, 100)
 
 [node name="Main" type="Node3D" unique_id=100720283]
 script = ExtResource("1_8gbba")
@@ -21,29 +34,10 @@ script = ExtResource("1_8gbba")
 [node name="roulette" parent="." unique_id=701009001 instance=ExtResource("1_jjgbg")]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=271975757]
-transform = Transform3D(-4.304837e-08, 0.7338247, -0.67933893, -7.584391e-09, 0.67933893, 0.7338247, 1, 3.674233e-08, -2.367882e-08, -1.6919584, 2.4983726, 1.7184926)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D" unique_id=1742129730]
-transform = Transform3D(1, 0, 0, 0, 0.7820973, -0.62315637, 0, 0.62315637, 0.7820973, 0, 0, 0)
-light_energy = 5.0
+transform = Transform3D(-4.238514e-08, 0.68263626, -0.7307583, -1.0685737e-08, 0.7307583, 0.68263626, 1, 3.674233e-08, -2.3678826e-08, -1.7403784, 2.3930507, 1.7184926)
 
 [node name="table" parent="." unique_id=597364654 instance=ExtResource("2_bo1nx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2459068, 0.2772007, 3.2459068)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=23427231]
-transform = Transform3D(1, 0, 0, 0, 0.5545975, 0.8321187, 0, -0.8321187, 0.5545975, 2.4995952, 3.9062996, 9.360865)
-light_energy = 10.0
-spot_range = 14.912672
-spot_angle = 57.3459
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=1708330267]
-transform = Transform3D(1, 0, 0, 0, -0.44797757, 0.8940449, 0, -0.8940449, -0.44797757, 2.4995952, 3.9062996, -6.9596176)
-light_energy = 10.0
-spot_range = 14.912672
-spot_angle = 57.3459
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1684419318]
-transform = Transform3D(-0.2506504, 0.83217084, 0.49463737, 0, -0.510948, 0.85961163, 0.9680777, 0.21546203, 0.12806925, 3.2846546, 3.5454307, -2.5108962)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1690187108]
 environment = SubResource("Environment_bo1nx")
@@ -180,6 +174,60 @@ text = "00"
 [node name="Label3D3" type="Label3D" parent="." unique_id=1769017643]
 transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -0.7690468, 0.44830102, 3.7828398)
 text = "00"
+
+[node name="card" parent="." unique_id=1813619653 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.44708407, 4.078391)
+
+[node name="card2" parent="." unique_id=1942796037 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.4591356, 4.078391)
+
+[node name="card3" parent="." unique_id=1559497014 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.47197133, 4.078391)
+
+[node name="card4" parent="." unique_id=1987498123 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.4854961, 4.078391)
+
+[node name="card5" parent="." unique_id=859384232 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.49887294, 4.078391)
+
+[node name="card6" parent="." unique_id=1528866315 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.5129477, 4.078391)
+
+[node name="card7" parent="." unique_id=1913684322 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.5260561, 4.078391)
+
+[node name="card8" parent="." unique_id=600047414 instance=ExtResource("4_jjvhh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.5389041, 4.078391)
+
+[node name="dealer" parent="." unique_id=1430812741 instance=ExtResource("6_21xkr")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.8367443, 0.36087656, 2.521914)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1373746779]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7522995, 0)
+material_override = SubResource("StandardMaterial3D_344ge")
+mesh = SubResource("PlaneMesh_21xkr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=461881303]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 7.27411, 0, 0)
+material_override = SubResource("StandardMaterial3D_6bp64")
+mesh = SubResource("PlaneMesh_6bp64")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=649069921]
+transform = Transform3D(0.8340008, 0.22454813, -0.5040047, 0.5384326, -0.13163356, 0.83232373, 0.120552815, -0.96553123, -0.23068658, -2.3058174, 5.0532265, -1.1963723)
+light_energy = 10.0
+shadow_enabled = true
+spot_range = 117.27776
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=1733085768]
+transform = Transform3D(0.48778677, 0.53110284, -0.6928159, -0.30575082, 0.8473074, 0.43426564, 0.8176677, 0, 0.57569045, -2.3852305, 4.164812, 4.950252)
+light_color = Color(0.54101604, 0.9964281, 0.9999998, 1)
+light_energy = 0.0
+shadow_enabled = true
+spot_range = 10.125402
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="." unique_id=2081059749]
+transform = Transform3D(0.03659992, -0.11700008, 0.9924572, 0.0043118075, 0.9931319, 0.1169206, -0.9993207, 0, 0.03685303, 5.498267, 2.802668, 2.6387472)
+spot_range = 9.933258
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]

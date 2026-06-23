@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cibwybqj6bkkv"]
+
+[ext_resource type="PackedScene" uid="uid://divgu2l5ls0ym" path="res://3D/dealer.blend" id="1_r86xs"]
+[ext_resource type="Script" uid="uid://o3t72pd1kdb7" path="res://Scenes/dealer.gd" id="2_etcia"]
+
+[node name="dealer" unique_id=1697413717 instance=ExtResource("1_r86xs")]
+script = ExtResource("2_etcia")
