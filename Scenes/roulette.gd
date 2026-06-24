@@ -34,6 +34,7 @@ func _physics_process(delta: float) -> void:
 	if ball.linear_velocity == Vector3.ZERO and not ball_stopped:
 		ball_stopped = true
 		get_parent().result = result
+		get_parent().show_result(result)
 		await get_tree().create_timer(.5).timeout
 
 

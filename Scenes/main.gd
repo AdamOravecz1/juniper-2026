@@ -102,14 +102,15 @@ const STACK_HEIGHT := 0.018
 
 func _ready():
 	update_all()
-	$dealer.deal()
+	randomize_cards()
 	
 func _on_button_pressed():
-	print(figures)
-
 	if $roulette.ball_stopped:
+		$dealer.deal()
+		await get_tree().create_timer(1).timeout
 
 		var total := 0
+		hide_result()
 
 		for b in bets.values():
 			total += b
@@ -172,9 +173,6 @@ func check_result():
 
 
 	update_all()
-	
-	if n != 0:
-		place_figure(n, sword_model, "player")
 		
 	result = -1
 	
@@ -484,3 +482,51 @@ func draw_card(pos, type, value, text):
 func pay(n):
 	money -= n
 	update_all()
+	
+func randomize_cards():
+	for card in $CardPile.get_children():
+		var data = card.get_random_card_data()
+		card.effect_type = card.EffectType["ADD"] if data.type == "add" else card.EffectType["MULTIPLY"]
+		card.effect_value = data.value
+		card.look = data.texture
+		card.cost = randi_range(1, 10)
+		card._ready()
+		var labels = [
+			$Label3D,
+			$Label3D2,
+			$Label3D3
+		]
+
+		var closest_label = null
+		var closest_dist = INF
+
+		for label in labels:
+
+			var dist = label.global_position.distance_to(card.global_position)
+
+			if dist < closest_dist:
+				closest_dist = dist
+				closest_label = label
+
+
+		if closest_label:
+			closest_label.text = str(card.cost)
+			
+func show_result(n):
+	$CanvasLayer/ResultLabel.visible = true
+	$CanvasLayer/Panel.visible = true
+	$CanvasLayer/ResultLabel.text = str(int(n))
+	var style = $CanvasLayer/Panel.get_theme_stylebox("panel").duplicate()
+	if color_table[int(n)] == "red":
+		style.bg_color = Color(0.686, 0.063, 0.0, 1.0)
+	elif color_table[int(n)] == "black":
+		style.bg_color = Color(0.073, 0.073, 0.073, 1.0)
+	else:
+		style.bg_color = Color(0.075, 0.431, 0.075, 1.0)
+	$CanvasLayer/Panel.add_theme_stylebox_override("panel", style)
+	
+func hide_result():
+	$CanvasLayer/ResultLabel.visible = false
+	$CanvasLayer/Panel.visible = false
+	
+	

@@ -51,7 +51,7 @@ func _on_area_3d_input_event(camera, event, event_position, normal, shape_idx):
 				return
 			main.pay(cost)
 			main.result = value
-			print(main.result)
+			main.show_result(value)
 			var data = get_random_card_data()
 			main.draw_card(global_position, data.type, data.value, data.texture)
 			queue_free()

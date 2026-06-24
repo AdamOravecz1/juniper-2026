@@ -4,12 +4,22 @@
 [ext_resource type="PackedScene" uid="uid://c2xr8d3s3i6y0" path="res://Scenes/roulette.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://32nhmn2y6hne" path="res://Scenes/card.tscn" id="4_jjvhh"]
-[ext_resource type="Texture2D" uid="uid://dy4gftelds18k" path="res://Textures/+1_card.png" id="5_21xkr"]
 [ext_resource type="PackedScene" uid="uid://cibwybqj6bkkv" path="res://Scenes/dealer.tscn" id="6_21xkr"]
 [ext_resource type="Texture2D" uid="uid://c6rsqrgjodfvu" path="res://Textures/Stanton - Livonia, MI The Flooring Company LLC.png" id="7_6bp64"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_21xkr"]
+bg_color = Color(0, 1, 0, 0)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 20.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 10.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_344ge"]
 albedo_texture = ExtResource("7_6bp64")
@@ -94,6 +104,45 @@ offset_right = 74.0
 offset_bottom = 120.0
 text = "ok"
 
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=177822983]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -282.0
+offset_right = 20.0
+offset_bottom = -242.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_21xkr")
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer" unique_id=1303038174]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.5
+offset_top = -309.0
+offset_right = 36.5
+offset_bottom = -221.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "00"
+
+[node name="NextBall" type="Label" parent="CanvasLayer" unique_id=1084403159]
+offset_left = 17.0
+offset_top = 575.0
+offset_right = 174.0
+offset_bottom = 620.0
+theme_override_font_sizes/font_size = 32
+text = "Next Ball: "
+
 [node name="1ChipHolder" type="Node3D" parent="." unique_id=1765813661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4929875, 0.45016485, 1.7134957)
 
@@ -114,15 +163,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493, 0.44767004, 4.1878967
 
 [node name="card" parent="CardPile" unique_id=1897013429 instance=ExtResource("4_jjvhh")]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, -0.9151139)
-look = ExtResource("5_21xkr")
 
 [node name="card2" parent="CardPile" unique_id=1990609015 instance=ExtResource("4_jjvhh")]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, -0.6624813)
-look = ExtResource("5_21xkr")
 
 [node name="card3" parent="CardPile" unique_id=450895368 instance=ExtResource("4_jjvhh")]
 transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, -0.40638828)
-look = ExtResource("5_21xkr")
 
 [node name="Red" type="Node3D" parent="." unique_id=109042415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059321433, 0.45, 2.8413079)
@@ -199,7 +245,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.4
 [node name="card8" parent="." unique_id=600047414 instance=ExtResource("4_jjvhh")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.5389041, 4.078391)
 
-[node name="dealer" parent="." unique_id=1430812741 instance=ExtResource("6_21xkr")]
+[node name="dealer" parent="." unique_id=1697413717 instance=ExtResource("6_21xkr")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.8367443, 0.36087656, 2.521914)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1373746779]
@@ -217,17 +263,20 @@ transform = Transform3D(0.8340008, 0.22454813, -0.5040047, 0.5384326, -0.1316335
 light_energy = 10.0
 shadow_enabled = true
 spot_range = 117.27776
+spot_angle = 67.84177
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="." unique_id=1733085768]
 transform = Transform3D(0.48778677, 0.53110284, -0.6928159, -0.30575082, 0.8473074, 0.43426564, 0.8176677, 0, 0.57569045, -2.3852305, 4.164812, 4.950252)
 light_color = Color(0.54101604, 0.9964281, 0.9999998, 1)
 light_energy = 0.0
 shadow_enabled = true
-spot_range = 10.125402
+spot_range = 13.292213
+spot_angle = 78.74999
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="." unique_id=2081059749]
 transform = Transform3D(0.03659992, -0.11700008, 0.9924572, 0.0043118075, 0.9931319, 0.1169206, -0.9993207, 0, 0.03685303, 5.498267, 2.802668, 2.6387472)
 spot_range = 9.933258
+spot_angle = 83.77467
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]
