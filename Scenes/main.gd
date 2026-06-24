@@ -621,10 +621,29 @@ func choose_ball():
 
 func damage_dealer():
 	dealer_health -= 1
+	$CanvasLayer/DealerBar.value = dealer_health
 	if dealer_health >= 0:
+		end("win")
 		print("dealer dead")
 		
 func damage_player():
 	player_health -= 1
+	$CanvasLayer/PlayerBar.value = player_health
 	if player_health >= 0:
+		end("lose")
 		print("player dead")
+		
+func end(outcome):
+	$CanvasLayer/EndCurtain.mouse_filter = Control.MOUSE_FILTER_STOP
+	$CanvasLayer/Replay.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_property($CanvasLayer/EndCurtain, "color", Color(0.0, 0.0, 0.0, 1.0), 1.0)
+	tween.parallel().tween_property($CanvasLayer/Replay, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.0)
+	if outcome == "win":
+		tween.parallel().tween_property($CanvasLayer/WinLabel, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.0)
+	else:
+		tween.parallel().tween_property($CanvasLayer/LoseLabel, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.0)
+	
+
+func _on_replay_pressed() -> void:
+	get_tree().reload_current_scene()

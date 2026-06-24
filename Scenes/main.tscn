@@ -26,6 +26,13 @@ expand_margin_top = 10.0
 expand_margin_right = 20.0
 expand_margin_bottom = 10.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1ilt"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_344ge"]
 albedo_texture = ExtResource("7_6bp64")
 uv1_scale = Vector3(100, 100, 100)
@@ -189,6 +196,106 @@ position = Vector2(198, 601)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("8_wsu2k")
 
+[node name="PlayerBar" type="ProgressBar" parent="CanvasLayer" unique_id=1359910229]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -527.0
+offset_top = -47.0
+offset_right = -503.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_d1ilt")
+max_value = 10.0
+value = 10.0
+fill_mode = 2
+
+[node name="DealerBar" type="ProgressBar" parent="CanvasLayer" unique_id=1386291142]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 508.0
+offset_top = -47.0
+offset_right = 532.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_d1ilt")
+max_value = 10.0
+value = 10.0
+fill_mode = 2
+
+[node name="EndCurtain" type="ColorRect" parent="CanvasLayer" unique_id=1346947627]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -624.0
+offset_top = -347.0
+offset_right = 615.0
+offset_bottom = 433.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="WinLabel" type="Label" parent="CanvasLayer" unique_id=1824266889]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -265.0
+offset_right = 253.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 1, 0.29803923, 1)
+theme_override_font_sizes/font_size = 128
+text = "You Win"
+
+[node name="LoseLabel" type="Label" parent="CanvasLayer" unique_id=566033875]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -265.0
+offset_right = 253.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.26000598, 0.2008352, 1)
+theme_override_font_sizes/font_size = 128
+text = "You Lose"
+
+[node name="Replay" type="Button" parent="CanvasLayer" unique_id=464959987]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.5
+offset_top = 53.0
+offset_right = 107.5
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "Replay"
+
 [node name="1ChipHolder" type="Node3D" parent="." unique_id=1765813661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4929875, 0.45016485, 1.7134957)
 
@@ -328,3 +435,4 @@ spot_angle = 83.77467
 [connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]
 [connection signal="pressed" from="CanvasLayer/Down" to="." method="_on_down_pressed"]
 [connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Replay" to="." method="_on_replay_pressed"]
