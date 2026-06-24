@@ -4,6 +4,8 @@ extends Node3D
 
 signal moved_finished(new_tile)
 
+var activated := false
+
 var tile_size := Vector3(0, 0, 0.184)
 var side := "player"
 var health := 3
@@ -30,7 +32,6 @@ func _ready() -> void:
 		tile_size = Vector3(0, 0, -0.184)
 
 func hit(damage):
-	print("ouch")
 	health -= damage
 	if health <= 0:
 		get_parent().get_parent().figures.erase(pos)
@@ -40,6 +41,9 @@ func heal():
 	health = 3
 
 func move():
+	if not activated:
+		activated = false
+		return
 	var next_tile: int
 	if side == "player":
 		next_tile = pos + 6
@@ -67,6 +71,16 @@ func move():
 				await $AnimationPlayer.animation_finished
 				get_parent().get_parent().figures[next_tile].hit(1)
 		return # blocked, do nothing
+		
+	if side == "player" and pos >= 31:
+		animation_player.play("Hit")
+		await $AnimationPlayer.animation_finished
+		get_parent().get_parent().damage_dealer()
+		
+	elif pos <= 6:
+		animation_player.play("Hit")
+		await $AnimationPlayer.animation_finished 
+		get_parent().get_parent().damage_player()
 
 	var tween = get_tree().create_tween()
 

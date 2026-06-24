@@ -59,3 +59,11 @@ func _on_area_3d_input_event(camera, event, event_position, normal, shape_idx):
 func get_random_card_data():
 	rng.randomize()
 	return effects[rng.randi_range(0, effects.size() - 1)]
+
+
+func _on_area_3d_mouse_entered() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+
+
+func _on_area_3d_mouse_exited() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)

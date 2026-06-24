@@ -3,9 +3,14 @@
 [ext_resource type="Script" uid="uid://dtw3pbf1rj7yp" path="res://Scenes/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://c2xr8d3s3i6y0" path="res://Scenes/roulette.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://c36ikowtc8t8m" path="res://Scenes/table.tscn" id="2_bo1nx"]
+[ext_resource type="Texture2D" uid="uid://b415laatv0m5f" path="res://Textures/damage_image.png" id="4_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://32nhmn2y6hne" path="res://Scenes/card.tscn" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://b1wjv1m7o7awk" path="res://Textures/heal_image.png" id="5_6iyac"]
 [ext_resource type="PackedScene" uid="uid://cibwybqj6bkkv" path="res://Scenes/dealer.tscn" id="6_21xkr"]
+[ext_resource type="Texture2D" uid="uid://bl2dbdai33wgs" path="res://Textures/bow_image.png" id="6_fdnlq"]
 [ext_resource type="Texture2D" uid="uid://c6rsqrgjodfvu" path="res://Textures/Stanton - Livonia, MI The Flooring Company LLC.png" id="7_6bp64"]
+[ext_resource type="Texture2D" uid="uid://b5pny4qun4maf" path="res://Textures/house_image.png" id="7_jkdf5"]
+[ext_resource type="Texture2D" uid="uid://brom66owq14xj" path="res://Textures/sword_image.png" id="8_wsu2k"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
@@ -40,6 +45,8 @@ script = ExtResource("1_8gbba")
 [node name="Figures" type="Node3D" parent="." unique_id=1023462105]
 
 [node name="Buildings" type="Node3D" parent="." unique_id=1727461116]
+
+[node name="Particles" type="Node3D" parent="." unique_id=986513674]
 
 [node name="roulette" parent="." unique_id=701009001 instance=ExtResource("1_jjgbg")]
 
@@ -134,14 +141,53 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 64
 text = "00"
+horizontal_alignment = 1
 
-[node name="NextBall" type="Label" parent="CanvasLayer" unique_id=1084403159]
+[node name="NextBallNode" type="Control" parent="CanvasLayer" unique_id=608175451]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NextBall" type="Label" parent="CanvasLayer/NextBallNode" unique_id=1084403159]
+visible = false
+layout_mode = 0
 offset_left = 17.0
 offset_top = 575.0
 offset_right = 174.0
 offset_bottom = 620.0
 theme_override_font_sizes/font_size = 32
 text = "Next Ball: "
+
+[node name="DamageImage" type="Sprite2D" parent="CanvasLayer/NextBallNode" unique_id=1879772897]
+visible = false
+position = Vector2(213.00002, 598)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("4_d1ilt")
+
+[node name="HealImage" type="Sprite2D" parent="CanvasLayer/NextBallNode" unique_id=501892028]
+visible = false
+position = Vector2(207.5, 602.5)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("5_6iyac")
+
+[node name="BowImage" type="Sprite2D" parent="CanvasLayer/NextBallNode" unique_id=1535773172]
+visible = false
+position = Vector2(199.5, 601.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_fdnlq")
+
+[node name="HouseImage" type="Sprite2D" parent="CanvasLayer/NextBallNode" unique_id=607912958]
+visible = false
+position = Vector2(203.5, 603.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("7_jkdf5")
+
+[node name="SwordImage" type="Sprite2D" parent="CanvasLayer/NextBallNode" unique_id=2067391430]
+visible = false
+position = Vector2(198, 601)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_wsu2k")
 
 [node name="1ChipHolder" type="Node3D" parent="." unique_id=1765813661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4929875, 0.45016485, 1.7134957)

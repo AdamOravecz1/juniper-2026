@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://ubc2fs7kqu01"]
+
+[ext_resource type="Script" uid="uid://2y3kpr52g67g" path="res://Scenes/particle.gd" id="1_xhwoe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vfgpi"]
+transparency = 1
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_weqha"]
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="Animation" id="Animation_2bthj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_vfgpi"]
+resource_name = "play"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_weqha"]
+_data = {
+&"RESET": SubResource("Animation_2bthj"),
+&"play": SubResource("Animation_vfgpi")
+}
+
+[node name="particle" type="CPUParticles3D" unique_id=1070167762]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_vfgpi")
+lifetime = 0.2
+one_shot = true
+mesh = SubResource("QuadMesh_weqha")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.2
+emission_ring_radius = 0.1
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 4.4, 0)
+script = ExtResource("1_xhwoe")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1948809295]
+libraries/ = SubResource("AnimationLibrary_weqha")
+autoplay = &"play"

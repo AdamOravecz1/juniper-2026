@@ -12,6 +12,8 @@ extends Node3D
 
 @onready var card_model = preload("res://Scenes/card.tscn")
 
+@onready var particle_scene = preload("res://Scenes/particle.tscn")
+
 @onready var _1_chip_holder = $"1ChipHolder"
 @onready var _5_chip_holder = $"5ChipHolder"
 @onready var _25_chip_holder = $"25ChipHolder"
@@ -38,9 +40,13 @@ var figures = {}
 
 var result := -1
 var color: String
+var ball: int
 
 var money := 50
 var bet_amount := 0
+
+var dealer_health = 10
+var player_health = 10
 
 var bets = {
 	"red":0,
@@ -120,8 +126,6 @@ func _on_button_pressed():
 			$roulette.start_ball()
 
 
-
-
 func check_result():
 
 	var n = result
@@ -174,14 +178,32 @@ func check_result():
 
 	update_all()
 		
-	result = -1
-	
+
+	if ball == 1 and result != 0:
+		heal_area(result)
+	elif ball == 2 and result != 0:
+		damage_area(result)
+	elif ball == 3 and result != 0 and n >= 25:
+		place_figure(result, sword_model, "enemy")
+	elif ball == 4 and result != 0 and n <= 12:
+		place_figure(result, sword_model, "player")
+	elif ball == 5 and result != 0 and n >= 25:
+		place_figure(result, bow_model, "enemy")
+	elif ball == 6 and result != 0 and n <= 12:
+		place_figure(result, bow_model, "player")
+	elif ball == 7 and result != 0 and n >= 25:
+		place_figure(result, house_model, "enemy")
+	elif ball == 7 and result != 0 and n <= 12:
+		place_figure(result, house_model, "player")
+		
 	for i in $Figures.get_children():
 		if i.has_method("move"):
 			await i.move()
 	for i in $Buildings.get_children():
 		if i.has_method("move"):
 			await i.move()
+			
+	result = -1
 	
 
 
@@ -396,34 +418,81 @@ func spawn_guy(n, side):
 	place_figure(n, sword_model, side)
 	
 func heal_area(n):
-	if figures.has(n):
-		figures[n].heal()
-	if figures.has(n + 1):
-		figures[n + 1].heal()
-	if figures.has(n - 1):
-		figures[n - 1].heal()
-	if figures.has(n + 3):
-		figures[n + 3].heal()
-	if figures.has(n - 3):
-		figures[n - 3].heal()
+	var tiles = [n, n + 1, n - 1, n + 3, n - 3]
+	var start = $OnePos.global_position
+	var cols = 3
+	var tile_size_x = 0.259
+	var tile_size_z = 0.184
+	for tile in tiles:
+		# Spawn particle regardless
+		var particle = particle_scene.instantiate()
+		particle.type = "heal"
+		$Particles.add_child(particle)
+		var x = (tile - 1) % cols
+		var z = (tile - 1) / cols
+		particle.global_position = start + Vector3(
+			x * tile_size_x,
+			0,
+			z * tile_size_z
+		)
+		# Damage only if figure exists
+		if figures.has(tile):
+			figures[tile].heal()
 	
 func damage_area(n):
-	if figures.has(n):
-		figures[n].hit(3)
-	if figures.has(n + 1):
-		figures[n + 1].hit(3)
-	if figures.has(n - 1):
-		figures[n - 1].hit(3)
-	if figures.has(n + 3):
-		figures[n + 3].hit(3)
-	if figures.has(n - 3):
-		figures[n - 3].hit(3)
+	var tiles = [n, n + 1, n - 1, n + 3, n - 3]
+	var start = $OnePos.global_position
+	var cols = 3
+	var tile_size_x = 0.259
+	var tile_size_z = 0.184
+	for tile in tiles:
+		# Spawn particle regardless
+		var particle = particle_scene.instantiate()
+		particle.type = "damage"
+		$Particles.add_child(particle)
+		var x = (tile - 1) % cols
+		var z = (tile - 1) / cols
+		particle.global_position = start + Vector3(
+			x * tile_size_x,
+			0,
+			z * tile_size_z
+		)
+		# Damage only if figure exists
+		if figures.has(tile):
+			figures[tile].hit(3)
 
 
 func _on_button_2_pressed() -> void:
 	if result >= 0:
 		check_result()
-	
+		ball = choose_ball()
+		print(ball)
+		for i in $CanvasLayer/NextBallNode.get_children():
+			i.visible = false
+		if ball != 0:
+			$CanvasLayer/NextBallNode/NextBall.visible = true
+		if ball == 1:
+			$CanvasLayer/NextBallNode/HealImage.visible = true
+		elif ball == 2:
+			$CanvasLayer/NextBallNode/DamageImage.visible = true
+		elif ball == 3:
+			$CanvasLayer/NextBallNode/SwordImage.visible = true
+			$CanvasLayer/NextBallNode/SwordImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+		elif ball == 4:
+			$CanvasLayer/NextBallNode/SwordImage.visible = true
+			$CanvasLayer/NextBallNode/SwordImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+		elif ball == 5:
+			$CanvasLayer/NextBallNode/BowImage.visible = true
+			$CanvasLayer/NextBallNode/BowImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+		elif ball == 6:
+			$CanvasLayer/NextBallNode/BowImage.visible = true
+			$CanvasLayer/NextBallNode/BowImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+		elif ball == 7:
+			$CanvasLayer/NextBallNode/HouseImage.visible = true
+			$CanvasLayer/NextBallNode/HouseImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+		elif ball == 8:
+			$CanvasLayer/NextBallNode/HouseImage.visible = true
+			$CanvasLayer/NextBallNode/HouseImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
 
 
 func draw_card(pos, type, value, text):
@@ -529,4 +598,33 @@ func hide_result():
 	$CanvasLayer/ResultLabel.visible = false
 	$CanvasLayer/Panel.visible = false
 	
-	
+func choose_ball():
+	var r = randf() # 0.0 - 1.0
+	if r < 0.5:
+		return 0
+	elif r < 0.6:
+		return 1
+	elif r < 0.7:
+		return 2
+	elif r < 0.75:
+		return 3
+	elif r < 0.8:
+		return 4
+	elif r < 0.85:
+		return 5
+	elif r < 0.9:
+		return 6
+	elif r < 0.95:
+		return 7
+	else:
+		return 8
+
+func damage_dealer():
+	dealer_health -= 1
+	if dealer_health >= 0:
+		print("dealer dead")
+		
+func damage_player():
+	player_health -= 1
+	if player_health >= 0:
+		print("player dead")
