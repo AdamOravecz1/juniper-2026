@@ -29,6 +29,7 @@ var effects = [
 
 
 func _ready() -> void:
+
 	$Cube.material_override = $Cube.material_override.duplicate()
 	$Cube.material_override.albedo_texture = look
 

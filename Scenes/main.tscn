@@ -15,6 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://dnhrtlx4qqhap" path="res://Scenes/button_1.tscn" id="13_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://32gychvic8nw" path="res://Scenes/button_ok.tscn" id="13_wsu2k"]
 [ext_resource type="PackedScene" uid="uid://5y2od28x15a2" path="res://Scenes/button_2.tscn" id="14_jkdf5"]
+[ext_resource type="AudioStream" uid="uid://dfgefcwqpei8w" path="res://Sounds/buycard.mp3" id="16_k12tt"]
+[ext_resource type="AudioStream" uid="uid://xq7w3prj0eyi" path="res://Sounds/carddrawn.mp3" id="17_h1bgf"]
+[ext_resource type="AudioStream" uid="uid://djroudocshwgy" path="res://Sounds/casinomusic.wav" id="18_b3802"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
@@ -50,12 +53,12 @@ albedo_color = Color(0.8431839, 0.8431839, 0.84318376, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_6bp64"]
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_jkdf5"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_b3802"]
 viewport_path = NodePath("../SubViewportContainer/SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsu2k"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fevyy"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_jkdf5")
+albedo_texture = SubResource("ViewportTexture_b3802")
 
 [node name="Main" type="Node3D" unique_id=100720283]
 script = ExtResource("1_8gbba")
@@ -424,7 +427,7 @@ spot_angle = 83.77467
 transform = Transform3D(-0.9390702, 0, -0.3437253, 0, 1, 0, 0.3437253, 0, -0.9390702, 1.4030321, 1.4441046, -0.23868263)
 
 [node name="Screen" parent="TV" index="1" unique_id=218455133]
-material_override = SubResource("StandardMaterial3D_wsu2k")
+material_override = SubResource("StandardMaterial3D_fevyy")
 
 [node name="button_ok" parent="." unique_id=804526747 instance=ExtResource("13_wsu2k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.782905, 0.45031154, 1.7729479)
@@ -440,6 +443,27 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.71
 
 [node name="button101" parent="." unique_id=1318301648 instance=ExtResource("14_jkdf5")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.25522006, 0.45031154, 1.5447885)
+
+[node name="Sounds" type="Control" parent="." unique_id=410388870]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="buy" type="AudioStreamPlayer" parent="Sounds" unique_id=1775283644]
+stream = ExtResource("16_k12tt")
+bus = &"SFX"
+
+[node name="draw" type="AudioStreamPlayer" parent="Sounds" unique_id=1688273171]
+stream = ExtResource("17_h1bgf")
+volume_db = 10.0
+bus = &"SFX"
+
+[node name="music" type="AudioStreamPlayer" parent="Sounds" unique_id=759963949]
+stream = ExtResource("18_b3802")
+volume_db = -10.0
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="CanvasLayer/Replay" to="." method="_on_replay_pressed"]
 [connection signal="pressed" from="button_ok" to="." method="_on_button_ok_pressed"]

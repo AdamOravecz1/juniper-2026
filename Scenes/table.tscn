@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://c1e2jjt6cj1yd" path="res://3D/table.blend" id="1_ix8et"]
 [ext_resource type="Script" uid="uid://b8kwrbc04r2k4" path="res://Scenes/table.gd" id="2_4ppvu"]
+[ext_resource type="AudioStream" uid="uid://opgt1kymt21o" path="res://Sounds/pokerdown.mp3" id="3_0xndo"]
+[ext_resource type="AudioStream" uid="uid://qt62uowbdhyj" path="res://Sounds/pokerup.mp3" id="4_xqsq7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r4jc3"]
 size = Vector3(0.17118835, 0.037963867, 0.3369751)
@@ -98,6 +100,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2493784, 0, 0.95459116)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Column3" index="0" unique_id=91056710]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.001127243, 0.17584229, 0.0041942596)
 shape = SubResource("BoxShape3D_0xndo")
+
+[node name="down" type="AudioStreamPlayer" parent="." index="20" unique_id=614769724]
+stream = ExtResource("3_0xndo")
+bus = &"SFX"
+
+[node name="up" type="AudioStreamPlayer" parent="." index="21" unique_id=1487054075]
+stream = ExtResource("4_xqsq7")
+bus = &"SFX"
 
 [connection signal="input_event" from="Red" to="." method="_on_red_input_event"]
 [connection signal="mouse_entered" from="Red" to="." method="_on_red_mouse_entered"]

@@ -2,12 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://7ct7u6u33k7b" path="res://3D/sword_guy.blend" id="1_h3qtf"]
 [ext_resource type="Script" uid="uid://btuvc0vvsgnsn" path="res://Scenes/sword_guy.gd" id="2_c70or"]
+[ext_resource type="AudioStream" uid="uid://dpxc4b65yirk2" path="res://Sounds/figure move.wav" id="3_5e2gm"]
+[ext_resource type="AudioStream" uid="uid://dx8efuugfpsv2" path="res://Sounds/sword.mp3" id="4_725tx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5e2gm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_725tx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6hxi"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_c70or"]
+radius = 0.02
+height = 0.04
 
 [node name="sword_guy" unique_id=2027796040 instance=ExtResource("1_h3qtf")]
 script = ExtResource("2_c70or")
@@ -20,3 +26,28 @@ material_override = SubResource("StandardMaterial3D_725tx")
 
 [node name="Cylinder_001" parent="." index="2" unique_id=1862492914]
 material_override = SubResource("StandardMaterial3D_f6hxi")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="4" unique_id=1073107982]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+mesh = SubResource("SphereMesh_c70or")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.2
+emission_ring_radius = 0.1
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 4.8, 0)
+
+[node name="move" type="AudioStreamPlayer" parent="." index="5" unique_id=2050478209]
+stream = ExtResource("3_5e2gm")
+bus = &"SFX"
+
+[node name="hit" type="AudioStreamPlayer" parent="." index="6" unique_id=782879682]
+stream = ExtResource("4_725tx")
+volume_db = 10.0
+bus = &"SFX"

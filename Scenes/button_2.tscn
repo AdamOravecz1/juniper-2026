@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bnqst48lr2ptu" path="res://3D/button2.blend" id="1_n1f16"]
 [ext_resource type="Script" uid="uid://bfdylpoldyqyu" path="res://Scenes/button_1.gd" id="2_vsgde"]
+[ext_resource type="AudioStream" uid="uid://b5rukfgvxuo33" path="res://Sounds/press_down.wav" id="3_t708d"]
+[ext_resource type="AudioStream" uid="uid://birlsag3w6xry" path="res://Sounds/press_up.wav" id="4_rtw48"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vsgde"]
 size = Vector3(0.31152344, 0.060440063, 0.19384766)
@@ -14,6 +16,14 @@ script = ExtResource("2_vsgde")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1858047851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00048828125, 0.018836975, -0.0007324219)
 shape = SubResource("BoxShape3D_vsgde")
+
+[node name="down" type="AudioStreamPlayer" parent="Area3D" index="1" unique_id=245179377]
+stream = ExtResource("3_t708d")
+bus = &"SFX"
+
+[node name="up" type="AudioStreamPlayer" parent="Area3D" index="2" unique_id=1877464076]
+stream = ExtResource("4_rtw48")
+bus = &"SFX"
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]

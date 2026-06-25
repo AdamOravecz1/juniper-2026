@@ -38,9 +38,7 @@ func heal():
 	health = 3
 
 func move():
-	if not activated:
-		activated = false
-		return
+
 	var next_tile: int
 	if side == "player":
 		next_tile = pos + 3
@@ -52,17 +50,20 @@ func move():
 		if get_parent().get_parent().figures[next_tile].side != side:
 			if get_parent().get_parent().figures[next_tile].has_method("hit"):
 				animation_player.play("Hit")
+				$hit.play()
 				await $AnimationPlayer.animation_finished
 				get_parent().get_parent().figures[next_tile].hit(1)
 		return # blocked, do nothing
 		
 	if side == "player" and pos >= 34:
 		animation_player.play("Hit")
+		$hit.play()
 		await $AnimationPlayer.animation_finished
 		get_parent().get_parent().damage_dealer()
 		
 	elif pos <= 3:
 		animation_player.play("Hit")
+		$hit.play()
 		await $AnimationPlayer.animation_finished 
 		get_parent().get_parent().damage_player()
 		
@@ -79,6 +80,7 @@ func move():
 
 	# drop
 	tween.tween_property(self, "global_position:y", start_pos.y, 0.1)
+	$move.play()
 
 	tween.tween_callback(func():
 		pos = next_tile

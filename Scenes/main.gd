@@ -107,9 +107,10 @@ const STACK_HEIGHT := 0.018
 
 
 func _ready():
+	place_figure(5, sword_model, "player")
+	place_figure(14, bow_model, "dealer")
 	update_all()
 	randomize_cards()
-	
 
 
 
@@ -435,6 +436,7 @@ func damage_area(n):
 
 func draw_card(pos, type, value, text):
 	var card = card_model.instantiate()
+	$Sounds/draw.play()
 
 	card.rotation.y = deg_to_rad(270)
 	card.rotation.z = deg_to_rad(180)
@@ -488,6 +490,7 @@ func draw_card(pos, type, value, text):
 		
 func pay(n):
 	money -= n
+	$Sounds/buy.play()
 	update_all()
 	
 func randomize_cards():
@@ -560,14 +563,14 @@ func choose_ball():
 func damage_dealer():
 	dealer_health -= 1
 	$SubViewportContainer/SubViewport/DealerBar.value = dealer_health
-	if dealer_health >= 0:
+	if dealer_health <= 0:
 		end("win")
 		print("dealer dead")
 		
 func damage_player():
 	player_health -= 1
 	$SubViewportContainer/SubViewport/PlayerBar.value = player_health
-	if player_health >= 0:
+	if player_health <= 0:
 		end("lose")
 		print("player dead")
 		
@@ -653,13 +656,28 @@ func _on_button_ok_pressed() -> void:
 	if $roulette.ball_stopped:
 
 		var total := 0
-		hide_result()
 
 		for b in bets.values():
 			total += b
 
 		if total > 0:
+			
+			hide_result()
 			$dealer.deal()
 			await get_tree().create_timer(1).timeout
 			$roulette.start_spin()
 			$roulette.start_ball()
+			
+func _input(event):
+	if event is InputEventKey and event.pressed and not event.echo:
+
+		if event.keycode == KEY_N:
+			var sfx_bus = AudioServer.get_bus_index("SFX")
+			print(sfx_bus)
+			var muted = AudioServer.is_bus_mute(sfx_bus)
+			AudioServer.set_bus_mute(sfx_bus, !muted)
+
+		if event.keycode == KEY_M:
+			var music_bus = AudioServer.get_bus_index("Music")
+			var muted = AudioServer.is_bus_mute(music_bus)
+			AudioServer.set_bus_mute(music_bus, !muted)

@@ -8,8 +8,10 @@ func bet(event, bet):
 			if event.pressed:
 				if event.button_index == MOUSE_BUTTON_LEFT:
 					get_parent().place_bet(bet)
+					$down.play()
 				elif event.button_index == MOUSE_BUTTON_RIGHT:
 					get_parent().remove_bet(bet)
+					$up.play()
 
 func _on_red_input_event(camera, event, pos, normal, shape):
 	bet(event, "red")

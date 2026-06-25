@@ -33,12 +33,14 @@ func _physics_process(delta: float) -> void:
 		ball_stopped = false
 	if ball.linear_velocity == Vector3.ZERO and not ball_stopped:
 		ball_stopped = true
+		$Spin.stop()
 		get_parent().result = result
 		get_parent().show_result(result)
 		await get_tree().create_timer(.5).timeout
 
 
 func start_spin():
+	$Spin.play()
 	result = -1
 	get_parent().result = -1
 	color = null

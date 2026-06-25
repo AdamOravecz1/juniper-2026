@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cm1by63d38cbg" path="res://3D/bow_guy.blend" id="1_ik1fl"]
 [ext_resource type="Script" uid="uid://cohbob16xb7qg" path="res://Scenes/bow_guy.gd" id="2_tyitm"]
+[ext_resource type="AudioStream" uid="uid://dpxc4b65yirk2" path="res://Sounds/figure move.wav" id="3_4kcvt"]
+[ext_resource type="AudioStream" uid="uid://bpcpi6a6ped4q" path="res://Sounds/bow.mp3" id="4_7wj7m"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyitm"]
 
@@ -15,19 +17,19 @@
 radius = 0.02
 height = 0.04
 
-[node name="bow_guy" unique_id=381209943 instance=ExtResource("1_ik1fl")]
+[node name="bow_guy" unique_id=1978616155 instance=ExtResource("1_ik1fl")]
 script = ExtResource("2_tyitm")
 
-[node name="Sphere" parent="." index="0" unique_id=1117949973]
+[node name="Sphere" parent="." index="0" unique_id=487073904]
 material_override = SubResource("StandardMaterial3D_tyitm")
 
-[node name="Cylinder" parent="." index="1" unique_id=1712162107]
+[node name="Cylinder" parent="." index="1" unique_id=1137848256]
 material_override = SubResource("StandardMaterial3D_0ub01")
 
-[node name="Cylinder_001" parent="." index="2" unique_id=1831462400]
+[node name="Cylinder_001" parent="." index="2" unique_id=451426895]
 material_override = SubResource("StandardMaterial3D_4kcvt")
 
-[node name="Cylinder_002" parent="." index="3" unique_id=1051452602]
+[node name="Cylinder_002" parent="." index="3" unique_id=314487216]
 transform = Transform3D(0.0029677055, 0, 0, 0, 0.0029677055, 0, 0, 0, 0.0029677055, -0.050096598, 0.028287737, -3.9304643e-10)
 material_override = SubResource("StandardMaterial3D_7wj7m")
 
@@ -46,3 +48,12 @@ emission_ring_radius = 0.1
 emission_ring_inner_radius = 0.0
 emission_ring_cone_angle = 90.0
 gravity = Vector3(0, 4.8, 0)
+
+[node name="move" type="AudioStreamPlayer" parent="." index="6" unique_id=2131049421]
+stream = ExtResource("3_4kcvt")
+bus = &"SFX"
+
+[node name="hit" type="AudioStreamPlayer" parent="." index="7" unique_id=1840960107]
+stream = ExtResource("4_7wj7m")
+volume_db = 10.0
+bus = &"SFX"
