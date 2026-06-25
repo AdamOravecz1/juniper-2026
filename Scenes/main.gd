@@ -251,7 +251,7 @@ func update_all():
 	update_bet_chips()
 
 	$CanvasLayer/Bet.text = str(bet_amount)
-	$CanvasLayer/Label.text = str(money)
+	$SubViewportContainer/SubViewport/Label.text = str(money)
 
 
 func update_bet_chips():
@@ -467,32 +467,32 @@ func _on_button_2_pressed() -> void:
 		check_result()
 		ball = choose_ball()
 		print(ball)
-		for i in $CanvasLayer/NextBallNode.get_children():
+		for i in $SubViewportContainer/SubViewport/NextBallNode.get_children():
 			i.visible = false
 		if ball != 0:
-			$CanvasLayer/NextBallNode/NextBall.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/NextBall.visible = true
 		if ball == 1:
-			$CanvasLayer/NextBallNode/HealImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/HealImage.visible = true
 		elif ball == 2:
-			$CanvasLayer/NextBallNode/DamageImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/DamageImage.visible = true
 		elif ball == 3:
-			$CanvasLayer/NextBallNode/SwordImage.visible = true
-			$CanvasLayer/NextBallNode/SwordImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
 		elif ball == 4:
-			$CanvasLayer/NextBallNode/SwordImage.visible = true
-			$CanvasLayer/NextBallNode/SwordImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
 		elif ball == 5:
-			$CanvasLayer/NextBallNode/BowImage.visible = true
-			$CanvasLayer/NextBallNode/BowImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
 		elif ball == 6:
-			$CanvasLayer/NextBallNode/BowImage.visible = true
-			$CanvasLayer/NextBallNode/BowImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
 		elif ball == 7:
-			$CanvasLayer/NextBallNode/HouseImage.visible = true
-			$CanvasLayer/NextBallNode/HouseImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
 		elif ball == 8:
-			$CanvasLayer/NextBallNode/HouseImage.visible = true
-			$CanvasLayer/NextBallNode/HouseImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
 
 
 func draw_card(pos, type, value, text):
@@ -582,21 +582,21 @@ func randomize_cards():
 			closest_label.text = str(card.cost)
 			
 func show_result(n):
-	$CanvasLayer/ResultLabel.visible = true
-	$CanvasLayer/Panel.visible = true
-	$CanvasLayer/ResultLabel.text = str(int(n))
-	var style = $CanvasLayer/Panel.get_theme_stylebox("panel").duplicate()
+	$SubViewportContainer/SubViewport/ResultLabel.visible = true
+	$SubViewportContainer/SubViewport/Panel.visible = true
+	$SubViewportContainer/SubViewport/ResultLabel.text = str(int(n))
+	var style = $SubViewportContainer/SubViewport/Panel.get_theme_stylebox("panel").duplicate()
 	if color_table[int(n)] == "red":
 		style.bg_color = Color(0.686, 0.063, 0.0, 1.0)
 	elif color_table[int(n)] == "black":
 		style.bg_color = Color(0.073, 0.073, 0.073, 1.0)
 	else:
 		style.bg_color = Color(0.075, 0.431, 0.075, 1.0)
-	$CanvasLayer/Panel.add_theme_stylebox_override("panel", style)
+	$SubViewportContainer/SubViewport/Panel.add_theme_stylebox_override("panel", style)
 	
 func hide_result():
-	$CanvasLayer/ResultLabel.visible = false
-	$CanvasLayer/Panel.visible = false
+	$SubViewportContainer/SubViewport/ResultLabel.visible = false
+	$SubViewportContainer/SubViewport/Panel.visible = false
 	
 func choose_ball():
 	var r = randf() # 0.0 - 1.0
@@ -621,14 +621,14 @@ func choose_ball():
 
 func damage_dealer():
 	dealer_health -= 1
-	$CanvasLayer/DealerBar.value = dealer_health
+	$SubViewportContainer/SubViewport/DealerBar.value = dealer_health
 	if dealer_health >= 0:
 		end("win")
 		print("dealer dead")
 		
 func damage_player():
 	player_health -= 1
-	$CanvasLayer/PlayerBar.value = player_health
+	$SubViewportContainer/SubViewport/PlayerBar.value = player_health
 	if player_health >= 0:
 		end("lose")
 		print("player dead")
