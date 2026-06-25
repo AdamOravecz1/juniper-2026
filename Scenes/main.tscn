@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://b5pny4qun4maf" path="res://Textures/house_image.png" id="7_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://brom66owq14xj" path="res://Textures/sword_image.png" id="8_wsu2k"]
 [ext_resource type="PackedScene" uid="uid://bwolxeockri2j" path="res://3D/TV.blend" id="12_6iyac"]
+[ext_resource type="PackedScene" uid="uid://dnhrtlx4qqhap" path="res://Scenes/button_1.tscn" id="13_fdnlq"]
+[ext_resource type="PackedScene" uid="uid://32gychvic8nw" path="res://Scenes/button_ok.tscn" id="13_wsu2k"]
+[ext_resource type="PackedScene" uid="uid://5y2od28x15a2" path="res://Scenes/button_2.tscn" id="14_jkdf5"]
 
 [sub_resource type="Environment" id="Environment_bo1nx"]
 background_mode = 1
@@ -47,12 +50,12 @@ albedo_color = Color(0.8431839, 0.8431839, 0.84318376, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_6bp64"]
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_6iyac"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jkdf5"]
 viewport_path = NodePath("../SubViewportContainer/SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fdnlq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsu2k"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_6iyac")
+albedo_texture = SubResource("ViewportTexture_jkdf5")
 
 [node name="Main" type="Node3D" unique_id=100720283]
 script = ExtResource("1_8gbba")
@@ -75,49 +78,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2459068, 0.2772007, 3.24590
 environment = SubResource("Environment_bo1nx")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=409428044]
-
-[node name="Button" type="Button" parent="CanvasLayer" unique_id=236777769]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -532.0
-offset_top = -281.0
-offset_right = -475.0
-offset_bottom = -250.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "spin"
-
-[node name="Bet" type="Label" parent="CanvasLayer" unique_id=1370597761]
-offset_left = 1062.0
-offset_top = 467.0
-offset_right = 1102.0
-offset_bottom = 490.0
-theme_override_font_sizes/font_size = 32
-text = "0"
-
-[node name="Up" type="Button" parent="CanvasLayer" unique_id=1512969428]
-offset_left = 1055.0
-offset_top = 438.0
-offset_right = 1084.0
-offset_bottom = 469.0
-text = "up"
-
-[node name="Down" type="Button" parent="CanvasLayer" unique_id=1855433345]
-offset_left = 1049.0
-offset_top = 508.0
-offset_right = 1100.0
-offset_bottom = 539.0
-text = "down"
-
-[node name="Button2" type="Button" parent="CanvasLayer" unique_id=552202223]
-offset_left = 47.0
-offset_top = 89.0
-offset_right = 74.0
-offset_bottom = 120.0
-text = "ok"
 
 [node name="EndCurtain" type="ColorRect" parent="CanvasLayer" unique_id=1346947627]
 anchors_preset = 15
@@ -190,8 +150,9 @@ offset_right = 1812.0
 offset_bottom = 531.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1203403073]
-transparent_bg = true
+handle_input_locally = false
 size_2d_override = Vector2i(517, 364)
+render_target_update_mode = 4
 
 [node name="NextBallNode" type="Control" parent="SubViewportContainer/SubViewport" unique_id=608175451]
 layout_mode = 3
@@ -287,10 +248,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -5.5
-offset_top = 5.0
-offset_right = 34.5
-offset_bottom = 45.0
+offset_left = -13.5
+offset_top = -10.0
+offset_right = 26.5
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.47, 0.47)
@@ -315,9 +276,9 @@ text = "00"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1779424768]
-offset_left = 248.0
+offset_left = 245.0
 offset_top = 133.0
-offset_right = 288.0
+offset_right = 285.0
 offset_bottom = 156.0
 text = "50"
 
@@ -399,6 +360,10 @@ text = "00"
 transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, -0.7690468, 0.44830102, 3.7828398)
 text = "00"
 
+[node name="Label3D4" type="Label3D" parent="." unique_id=1666173595]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, 0.2399379, 0.44830102, 1.5573093)
+text = "00"
+
 [node name="card" parent="." unique_id=1813619653 instance=ExtResource("4_jjvhh")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.44708407, 4.078391)
 
@@ -439,7 +404,6 @@ mesh = SubResource("PlaneMesh_6bp64")
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=649069921]
 transform = Transform3D(0.8340008, 0.22454813, -0.5040047, 0.5384326, -0.13163356, 0.83232373, 0.120552815, -0.96553123, -0.23068658, -2.3058174, 5.0532265, -1.1963723)
 light_energy = 10.0
-shadow_enabled = true
 spot_range = 117.27776
 spot_angle = 67.84177
 
@@ -456,16 +420,32 @@ transform = Transform3D(0.03659992, -0.11700008, 0.9924572, 0.0043118075, 0.9931
 spot_range = 9.933258
 spot_angle = 83.77467
 
-[node name="TV" parent="." unique_id=196731555 instance=ExtResource("12_6iyac")]
+[node name="TV" parent="." unique_id=1550299330 instance=ExtResource("12_6iyac")]
 transform = Transform3D(-0.9390702, 0, -0.3437253, 0, 1, 0, 0.3437253, 0, -0.9390702, 1.4030321, 1.4441046, -0.23868263)
 
-[node name="Screen" parent="TV" index="1" unique_id=821812628]
-material_override = SubResource("StandardMaterial3D_fdnlq")
+[node name="Screen" parent="TV" index="1" unique_id=218455133]
+material_override = SubResource("StandardMaterial3D_wsu2k")
 
-[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Up" to="." method="_on_up_pressed"]
-[connection signal="pressed" from="CanvasLayer/Down" to="." method="_on_down_pressed"]
-[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]
+[node name="button_ok" parent="." unique_id=804526747 instance=ExtResource("13_wsu2k")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.782905, 0.45031154, 1.7729479)
+
+[node name="button1" parent="." unique_id=1121036493 instance=ExtResource("13_fdnlq")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.4702196, 0.45031154, 1.5447885)
+
+[node name="button12" parent="." unique_id=2123744290 instance=ExtResource("13_fdnlq")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.0038682222, 0.45031154, 1.5447885)
+
+[node name="button10" parent="." unique_id=172879611 instance=ExtResource("14_jkdf5")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.7155658, 0.45031154, 1.5447885)
+
+[node name="button101" parent="." unique_id=1318301648 instance=ExtResource("14_jkdf5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.25522006, 0.45031154, 1.5447885)
+
 [connection signal="pressed" from="CanvasLayer/Replay" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="button_ok" to="." method="_on_button_ok_pressed"]
+[connection signal="pressed" from="button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="button12" to="." method="_on_button_12_pressed"]
+[connection signal="pressed" from="button10" to="." method="_on_button_10_pressed"]
+[connection signal="pressed" from="button101" to="." method="_on_button_101_pressed"]
 
 [editable path="TV"]

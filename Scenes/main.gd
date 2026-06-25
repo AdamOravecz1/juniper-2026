@@ -42,7 +42,7 @@ var result := -1
 var color: String
 var ball: int
 
-var money := 50
+var money := 51
 var bet_amount := 0
 
 var dealer_health = 10
@@ -83,7 +83,7 @@ const color_table := {
 	16: "red",
 	17: "black",
 	18: "red",
-	19: "black",
+	19: "red",
 	20: "black",
 	21: "red",
 	22: "black",
@@ -92,7 +92,7 @@ const color_table := {
 	25: "red",
 	26: "black",
 	27: "red",
-	28: "red",
+	28: "black",
 	29: "black",
 	30: "red",
 	31: "black",
@@ -110,20 +110,7 @@ func _ready():
 	update_all()
 	randomize_cards()
 	
-func _on_button_pressed():
-	if $roulette.ball_stopped:
-		$dealer.deal()
-		await get_tree().create_timer(1).timeout
 
-		var total := 0
-		hide_result()
-
-		for b in bets.values():
-			total += b
-
-		if total > 0:
-			$roulette.start_spin()
-			$roulette.start_ball()
 
 
 func check_result():
@@ -208,22 +195,6 @@ func check_result():
 
 
 
-func _on_up_pressed():
-
-	if money > 0:
-		money -= 1
-		bet_amount += 1
-		update_all()
-
-
-func _on_down_pressed():
-
-	if bet_amount > 0:
-		bet_amount -= 1
-		money += 1
-		update_all()
-
-
 func place_bet(name):
 
 	if bet_amount <= 0:
@@ -250,7 +221,7 @@ func update_all():
 	update_holder_chips()
 	update_bet_chips()
 
-	$CanvasLayer/Bet.text = str(bet_amount)
+	$Label3D4.text = str(bet_amount)
 	$SubViewportContainer/SubViewport/Label.text = str(money)
 
 
@@ -462,39 +433,6 @@ func damage_area(n):
 			figures[tile].hit(3)
 
 
-func _on_button_2_pressed() -> void:
-	if result >= 0:
-		check_result()
-		ball = choose_ball()
-		print(ball)
-		for i in $SubViewportContainer/SubViewport/NextBallNode.get_children():
-			i.visible = false
-		if ball != 0:
-			$SubViewportContainer/SubViewport/NextBallNode/NextBall.visible = true
-		if ball == 1:
-			$SubViewportContainer/SubViewport/NextBallNode/HealImage.visible = true
-		elif ball == 2:
-			$SubViewportContainer/SubViewport/NextBallNode/DamageImage.visible = true
-		elif ball == 3:
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
-		elif ball == 4:
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
-		elif ball == 5:
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
-		elif ball == 6:
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
-		elif ball == 7:
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
-		elif ball == 8:
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
-
-
 func draw_card(pos, type, value, text):
 	var card = card_model.instantiate()
 
@@ -647,3 +585,81 @@ func end(outcome):
 
 func _on_replay_pressed() -> void:
 	get_tree().reload_current_scene()
+
+
+func _on_button_1_pressed() -> void:
+	if money > 0:
+		money -= 1
+		bet_amount += 1
+		update_all()
+	
+
+func _on_button_12_pressed() -> void:
+	if bet_amount > 0:
+		bet_amount -= 1
+		money += 1
+		update_all()
+
+
+func _on_button_10_pressed() -> void:
+	if money-10 > 0:
+		money -= 10
+		bet_amount += 10
+		update_all()
+
+
+func _on_button_101_pressed() -> void:
+	if bet_amount-10 > 0:
+		bet_amount -= 10
+		money += 10
+		update_all()
+
+
+func _on_button_ok_pressed() -> void:
+	if result >= 0:
+		check_result()
+		ball = choose_ball()
+		print(ball)
+		for i in $SubViewportContainer/SubViewport/NextBallNode.get_children():
+			i.visible = false
+		if ball != 0:
+			$SubViewportContainer/SubViewport/NextBallNode/NextBall.visible = true
+		if ball == 1:
+			$SubViewportContainer/SubViewport/NextBallNode/HealImage.visible = true
+		elif ball == 2:
+			$SubViewportContainer/SubViewport/NextBallNode/DamageImage.visible = true
+		elif ball == 3:
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+		elif ball == 4:
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+		elif ball == 5:
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+		elif ball == 6:
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+		elif ball == 7:
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
+		elif ball == 8:
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
+			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
+			
+		
+		return
+		
+	if $roulette.ball_stopped:
+
+		var total := 0
+		hide_result()
+
+		for b in bets.values():
+			total += b
+
+		if total > 0:
+			$dealer.deal()
+			await get_tree().create_timer(1).timeout
+			$roulette.start_spin()
+			$roulette.start_ball()

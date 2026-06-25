@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dnhrtlx4qqhap"]
+
+[ext_resource type="PackedScene" uid="uid://cwhsebja2om5t" path="res://3D/button1.blend" id="1_noj22"]
+[ext_resource type="Script" uid="uid://bfdylpoldyqyu" path="res://Scenes/button_1.gd" id="2_3c583"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ngepo"]
+size = Vector3(0.31152344, 0.060440063, 0.19384766)
+
+[node name="button1" unique_id=1121036493 instance=ExtResource("1_noj22")]
+script = ExtResource("2_3c583")
+
+[node name="Area3D" type="Area3D" parent="." index="2" unique_id=344920057]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1578447399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00048828125, 0.018836975, -0.0007324219)
+shape = SubResource("BoxShape3D_ngepo")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

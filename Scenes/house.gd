@@ -17,6 +17,7 @@ func _ready() -> void:
 
 func hit(damage):
 	health -= damage
+	$CPUParticles3D.emitting = true
 	if health <= 0:
 		get_parent().get_parent().figures.erase(pos)
 		queue_free()

@@ -11,17 +11,38 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7wj7m"]
 
+[sub_resource type="SphereMesh" id="SphereMesh_tyitm"]
+radius = 0.02
+height = 0.04
+
 [node name="bow_guy" unique_id=381209943 instance=ExtResource("1_ik1fl")]
 script = ExtResource("2_tyitm")
 
-[node name="Sphere" parent="." index="0" unique_id=399105488]
+[node name="Sphere" parent="." index="0" unique_id=1117949973]
 material_override = SubResource("StandardMaterial3D_tyitm")
 
-[node name="Cylinder" parent="." index="1" unique_id=228921623]
+[node name="Cylinder" parent="." index="1" unique_id=1712162107]
 material_override = SubResource("StandardMaterial3D_0ub01")
 
-[node name="Cylinder_001" parent="." index="2" unique_id=58087085]
+[node name="Cylinder_001" parent="." index="2" unique_id=1831462400]
 material_override = SubResource("StandardMaterial3D_4kcvt")
 
-[node name="Cylinder_002" parent="." index="3" unique_id=304906383]
+[node name="Cylinder_002" parent="." index="3" unique_id=1051452602]
+transform = Transform3D(0.0029677055, 0, 0, 0, 0.0029677055, 0, 0, 0, 0.0029677055, -0.050096598, 0.028287737, -3.9304643e-10)
 material_override = SubResource("StandardMaterial3D_7wj7m")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="5" unique_id=1772786181]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+mesh = SubResource("SphereMesh_tyitm")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.2
+emission_ring_radius = 0.1
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 4.8, 0)
