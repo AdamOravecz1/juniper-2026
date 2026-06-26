@@ -58,8 +58,8 @@ func _on_area_3d_input_event(camera, event, event_position, normal, shape_idx):
 			queue_free()
 				
 func get_random_card_data():
-	rng.randomize()
-	return effects[rng.randi_range(0, effects.size() - 1)]
+
+	return effects[randi_range(0, effects.size() - 1)]
 
 
 func _on_area_3d_mouse_entered() -> void:

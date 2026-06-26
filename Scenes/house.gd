@@ -43,3 +43,4 @@ func move():
 				if not get_parent().get_parent().figures.has(next_tile):
 					get_parent().get_parent().spawn_guy(next_tile, side)
 		spawn_counter = 3
+		

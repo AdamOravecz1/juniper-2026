@@ -116,6 +116,7 @@ const STACK_HEIGHT := 0.018
 
 func _ready():
 	place_figure(2, "house", "player")
+
 	place_figure(35, "house", "dealer")
 
 
@@ -174,6 +175,7 @@ func check_result():
 
 	if money <= 0:
 		money = 1
+		
 
 	update_all()
 
@@ -184,8 +186,12 @@ func check_result():
 	elif ball == 2 and result != 0:
 		damage_area(result)
 		
-	await get_tree().process_frame
+	
+	result = -1 
+
+	await get_tree().create_timer(.5).timeout
 	for i in $Figures.get_children():
+		print(i)
 		if i:
 			if i.has_method("move"):
 				await i.move()
@@ -196,7 +202,7 @@ func check_result():
 	
 
 			
-	result = -1
+	
 
 
 
@@ -636,16 +642,18 @@ func _on_button_12_pressed() -> void:
 
 
 func _on_button_10_pressed() -> void:
-	if money-10 >= 0:
-		if bet_amount + 10 > 20:
-			money -= 20 - bet_amount
-			bet_amount = 20
-		else:
-			money -= 10
-			bet_amount += 10
-	else:
-		bet_amount += money
-		money = 0
+	var add_amount = 10
+
+	var allowed = min(add_amount, money)
+
+	bet_amount += allowed
+	money -= allowed
+
+	if bet_amount > 20:
+		var overflow = bet_amount - 20
+		bet_amount = 20
+		money += overflow  
+
 	update_all()
 
 
@@ -666,7 +674,7 @@ func _on_button_ok_pressed() -> void:
 		await check_result()
 		check_rounds()
 		ball = choose_ball()
-		print(ball)
+
 		for i in $SubViewportContainer/SubViewport/NextBallNode.get_children():
 			i.visible = false
 		if ball != 0:

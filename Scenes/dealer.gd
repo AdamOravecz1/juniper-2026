@@ -14,12 +14,13 @@ func place():
 var dialogue := [
 "Welcome, challenger. I am the dealer. Allow me to explain the rules before we begin.",
 "You may bet on red, black, odd, even, 1–18, or 19–36; these pay double. You may also bet on 1st, 2nd, or 3rd twelve, or any column; these pay 2 to 1.",
+"You may place at most 20 chips on a single bet. Should you lose everything, the casino will provide one complimentary chip.",
 "After the roulette outcome is determined, you may purchase cards that influence the result. Their prices are shown beneath them.",
 "When you are ready, press OK to continue. After that, the board phase begins.",
 "Figures move forward when they cannot attack. Sword wielders attack one space ahead; bow wielders attack two spaces away.",
 "Figures have 3 health. Reaching the end of the board deals damage to my health and removes the figure.",
 "Houses spawn a sword wielder every 3 turns if the space ahead is free. You may buy and place figures by dragging them onto the board (you: 1–12, me: 25+).",
-"Each round may include a special roulette ball: damage destroys all figures and affects the next horizontally and verticaly; healing restores instead.",
+"Each round may include a special roulette ball: damage destroys all figures and affects the next horizontally and vertically; healing restores instead.",
 "All key information (ball, funds, and both health pools) is shown on the television. Bets can be removed with right click.",
 "That concludes the rules. Try your luck. The house always wins... eventually. Good luck."
 ]
@@ -62,7 +63,8 @@ func type_text():
 			label.text = full_text
 			return
 
-		label.text += c
+		if label:
+			label.text += c
 
 		await get_tree().create_timer(speed).timeout
 

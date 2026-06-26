@@ -42,8 +42,22 @@ func heal():
 	health = 3
 
 func move():
-
 	var next_tile: int
+	if side == "player":
+		next_tile = pos + 3
+	else:
+		next_tile = pos - 3
+	# check if occupied
+	if get_parent().get_parent().figures.has(next_tile):
+		if get_parent().get_parent().figures[next_tile].side != side:
+			if get_parent().get_parent().figures[next_tile].has_method("hit"):
+				animation_player.play("Hit")
+				$hit.play()
+				await $AnimationPlayer.animation_finished
+				get_parent().get_parent().figures[next_tile].hit(1)
+		return # blocked, do nothing
+		
+	
 	if side == "player":
 		next_tile = pos + 6
 	else:
@@ -59,19 +73,7 @@ func move():
 				get_parent().get_parent().figures[next_tile].hit(1)
 		return # blocked, do nothing
 		
-	if side == "player":
-		next_tile = pos + 3
-	else:
-		next_tile = pos - 3
-	# check if occupied
-	if get_parent().get_parent().figures.has(next_tile):
-		if get_parent().get_parent().figures[next_tile].side != side:
-			if get_parent().get_parent().figures[next_tile].has_method("hit"):
-				animation_player.play("Hit")
-				$hit.play()
-				await $AnimationPlayer.animation_finished
-				get_parent().get_parent().figures[next_tile].hit(1)
-		return # blocked, do nothing
+
 		
 	if side == "player" and pos >= 31:
 		animation_player.play("Hit")
