@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c6rsqrgjodfvu" path="res://Textures/Stanton - Livonia, MI The Flooring Company LLC.png" id="7_6bp64"]
 [ext_resource type="Texture2D" uid="uid://b5pny4qun4maf" path="res://Textures/house_image.png" id="7_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://brom66owq14xj" path="res://Textures/sword_image.png" id="8_wsu2k"]
+[ext_resource type="Texture2D" uid="uid://b1u8ebeychhgn" path="res://Textures/white_chip.png" id="9_pdsj5"]
 [ext_resource type="PackedScene" uid="uid://bwolxeockri2j" path="res://3D/TV.blend" id="12_6iyac"]
 [ext_resource type="PackedScene" uid="uid://dnhrtlx4qqhap" path="res://Scenes/button_1.tscn" id="13_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://32gychvic8nw" path="res://Scenes/button_ok.tscn" id="13_wsu2k"]
@@ -55,12 +56,12 @@ albedo_color = Color(0.8431839, 0.8431839, 0.84318376, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_6bp64"]
 size = Vector2(100, 100)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_hibaj"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_pdsj5"]
 viewport_path = NodePath("../SubViewportContainer/SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdsj5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ee4r6"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_hibaj")
+albedo_texture = SubResource("ViewportTexture_pdsj5")
 
 [node name="Main" type="Node3D" unique_id=100720283]
 script = ExtResource("1_8gbba")
@@ -223,9 +224,9 @@ grow_vertical = 2
 scale = Vector2(0.455, 0.455)
 theme_override_colors/font_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_styles/fill = SubResource("StyleBoxFlat_d1ilt")
-max_value = 10.0
-value = 10.0
-fill_mode = 2
+max_value = 3.0
+value = 3.0
+fill_mode = 3
 
 [node name="PlayerBar" type="ProgressBar" parent="SubViewportContainer/SubViewport" unique_id=1359910229]
 anchors_preset = 8
@@ -242,9 +243,9 @@ grow_vertical = 2
 scale = Vector2(0.455, 0.455)
 theme_override_colors/font_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
 theme_override_styles/fill = SubResource("StyleBoxFlat_d1ilt")
-max_value = 10.0
-value = 10.0
-fill_mode = 2
+max_value = 3.0
+value = 3.0
+fill_mode = 3
 
 [node name="Panel" type="Panel" parent="SubViewportContainer/SubViewport" unique_id=177822983]
 visible = false
@@ -263,7 +264,6 @@ scale = Vector2(0.47, 0.47)
 theme_override_styles/panel = SubResource("StyleBoxFlat_21xkr")
 
 [node name="ResultLabel" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1303038174]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -281,11 +281,17 @@ text = "00"
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1779424768]
-offset_left = 245.0
+offset_left = 218.0
 offset_top = 133.0
-offset_right = 285.0
+offset_right = 258.0
 offset_bottom = 156.0
 text = "50"
+horizontal_alignment = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport" unique_id=1085987387]
+position = Vector2(264, 145)
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("9_pdsj5")
 
 [node name="1ChipHolder" type="Node3D" parent="." unique_id=1765813661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24567878, 0.45016485, 1.7134957)
@@ -405,7 +411,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.4
 [node name="card8" parent="." unique_id=600047414 instance=ExtResource("4_jjvhh")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.49273086, 0.5389041, 4.078391)
 
-[node name="dealer" parent="." unique_id=1697413717 instance=ExtResource("6_21xkr")]
+[node name="dealer" parent="." unique_id=324527351 instance=ExtResource("6_21xkr")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.8367443, 0.36087656, 2.521914)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1373746779]
@@ -441,7 +447,7 @@ spot_angle = 83.77467
 transform = Transform3D(-0.9390702, 0, -0.3437253, 0, 1, 0, 0.3437253, 0, -0.9390702, 1.4030321, 1.4441046, -0.23868263)
 
 [node name="Screen" parent="TV" index="1" unique_id=218455133]
-material_override = SubResource("StandardMaterial3D_pdsj5")
+material_override = SubResource("StandardMaterial3D_ee4r6")
 
 [node name="button_ok" parent="." unique_id=804526747 instance=ExtResource("13_wsu2k")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.782905, 0.45031154, 1.7729479)

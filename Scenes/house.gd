@@ -26,14 +26,20 @@ func heal():
 	health = 3
 		
 func move():
+	var next_tile: int
+	if side == "player":
+		next_tile = pos + 3
+	else:
+		next_tile = pos - 3	
+
 	spawn_counter -= 1
 	if spawn_counter <= 0:
 		if side == "player":
-			var next = pos + 3
-			if not get_parent().get_parent().figures.has(next):
-				get_parent().get_parent().spawn_guy(next, side)
+			if not get_parent().get_parent().figures.has(next_tile):
+				if not get_parent().get_parent().figures.has(next_tile):
+					get_parent().get_parent().spawn_guy(next_tile, side)
 		else:
-			var next = pos - 3
-			if not get_parent().get_parent().figures.has(next):
-				get_parent().get_parent().spawn_guy(next, side)
+			if not get_parent().get_parent().figures.has(next_tile):
+				if not get_parent().get_parent().figures.has(next_tile):
+					get_parent().get_parent().spawn_guy(next_tile, side)
 		spawn_counter = 3

@@ -3,15 +3,79 @@
 [ext_resource type="PackedScene" uid="uid://divgu2l5ls0ym" path="res://3D/dealer.blend" id="1_r86xs"]
 [ext_resource type="Script" uid="uid://o3t72pd1kdb7" path="res://Scenes/dealer.gd" id="2_etcia"]
 
-[node name="dealer" unique_id=324527351 instance=ExtResource("1_r86xs")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etcia"]
+bg_color = Color(0.25565878, 0.25565878, 0.25565878, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 7
+anti_aliasing = false
+anti_aliasing_size = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_etcia"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmjkp"]
+
+[node name="dealer" unique_id=215279722 instance=ExtResource("1_r86xs")]
 script = ExtResource("2_etcia")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(597233741) index="0" unique_id=1688375344]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1315812196) index="0" unique_id=1524199144]
 bones/1/rotation = Quaternion(-0.032506514, 1.19146286e-07, -3.8750785e-09, 0.99947155)
 bones/2/rotation = Quaternion(0.16516145, 9.175346e-08, 0.00025953518, 0.98626655)
 bones/3/rotation = Quaternion(-0.01626435, -0.08244988, -0.9776229, 0.19284949)
-bones/4/rotation = Quaternion(0.18818381, 0.009899539, -0.42015937, 0.88766825)
+bones/4/rotation = Quaternion(0.18818383, 0.009899539, -0.4201594, 0.8876683)
 bones/5/rotation = Quaternion(0.04988389, -0.09069296, -0.15540807, 0.98241276)
 bones/6/rotation = Quaternion(-0.017144486, 0.095528394, 0.97962785, 0.17581174)
 bones/7/rotation = Quaternion(0.16911413, -0.013003148, 0.4125273, 0.8950154)
 bones/8/rotation = Quaternion(0.050326385, 0.08854069, 0.15684868, 0.98235756)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2" unique_id=2022320259]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" index="0" unique_id=2026705188]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -189.0
+offset_top = -121.0
+offset_right = 117.0
+offset_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Panel" type="Panel" parent="CanvasLayer" index="1" unique_id=212852539]
+offset_left = 493.0
+offset_top = 61.0
+offset_right = 1112.0
+offset_bottom = 237.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_etcia")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer" index="2" unique_id=906746550]
+offset_left = 515.0
+offset_top = 75.0
+offset_right = 1091.0
+offset_bottom = 225.0
+text = "srtyhsthsrth"
+
+[node name="Button" type="Button" parent="CanvasLayer" index="3" unique_id=1594819477]
+offset_left = 1024.0
+offset_top = 201.0
+offset_right = 1069.0
+offset_bottom = 232.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_etcia")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xmjkp")
+text = "Next"
+
+[node name="Button2" type="Button" parent="CanvasLayer" index="4" unique_id=702518822]
+offset_left = 522.0
+offset_top = 201.0
+offset_right = 567.0
+offset_bottom = 232.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_etcia")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xmjkp")
+text = "Skip Rules"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]

@@ -42,11 +42,11 @@ var result := -1
 var color: String
 var ball: int
 
-var money := 51
+var money := 20
 var bet_amount := 0
 
-var dealer_health = 10
-var player_health = 10
+var dealer_health = 3
+var player_health = 3
 
 var rounds := 0
 
@@ -115,11 +115,12 @@ const STACK_HEIGHT := 0.018
 
 
 func _ready():
+	place_figure(2, "house", "player")
+	place_figure(35, "house", "dealer")
+
 
 	update_all()
 	randomize_cards()
-
-
 
 
 func check_result():
@@ -171,21 +172,29 @@ func check_result():
 	for key in bets:
 		bets[key] = 0
 
+	if money <= 0:
+		money = 1
 
 	update_all()
-		
+
+
 
 	if ball == 1 and result != 0:
 		heal_area(result)
 	elif ball == 2 and result != 0:
 		damage_area(result)
 		
+	await get_tree().process_frame
 	for i in $Figures.get_children():
-		if i.has_method("move"):
-			await i.move()
+		if i:
+			if i.has_method("move"):
+				await i.move()
 	for i in $Buildings.get_children():
-		if i.has_method("move"):
-			await i.move()
+		if i:
+			if i.has_method("move"):
+				await i.move()
+	
+
 			
 	result = -1
 
@@ -390,7 +399,7 @@ func _on_figure_moved_finished(new_tile, figure):
 	figures[new_tile] = figure
 	
 func spawn_guy(n, side):
-	place_figure(n, sword_model, side)
+	place_figure(n, "sword", side)
 	
 func heal_area(n):
 	var tiles = [n, n + 1, n - 1, n + 3, n - 3]
@@ -479,7 +488,7 @@ func draw_card(pos, type, value, text):
 	card.effect_type = card.EffectType["ADD"] if type == "add" else card.EffectType["MULTIPLY"]
 	card.effect_value = value
 	card.look = text
-	card.cost = randi_range(1, 10)
+	card.cost = randi_range(5, 15)
 	
 
 	$CardPile.add_child(card)
@@ -534,7 +543,7 @@ func randomize_cards():
 		card.effect_type = card.EffectType["ADD"] if data.type == "add" else card.EffectType["MULTIPLY"]
 		card.effect_value = data.value
 		card.look = data.texture
-		card.cost = randi_range(1, 10)
+		card.cost = randi_range(5, 15)
 		card._ready()
 		var labels = [
 			$Label3D,
@@ -576,9 +585,7 @@ func hide_result():
 	
 func choose_ball():
 	var r = randf() # 0.0 - 1.0
-	if r < 0.4:
-		return 0
-	elif r < 0.7:
+	if r < 0.5:
 		return 1
 	else:
 		return 2
@@ -615,7 +622,7 @@ func _on_replay_pressed() -> void:
 
 
 func _on_button_1_pressed() -> void:
-	if money > 0:
+	if money > 0 and bet_amount < 20:
 		money -= 1
 		bet_amount += 1
 		update_all()
@@ -629,22 +636,35 @@ func _on_button_12_pressed() -> void:
 
 
 func _on_button_10_pressed() -> void:
-	if money-10 > 0:
-		money -= 10
-		bet_amount += 10
-		update_all()
+	if money-10 >= 0:
+		if bet_amount + 10 > 20:
+			money -= 20 - bet_amount
+			bet_amount = 20
+		else:
+			money -= 10
+			bet_amount += 10
+	else:
+		bet_amount += money
+		money = 0
+	update_all()
 
 
 func _on_button_101_pressed() -> void:
 	if bet_amount-10 > 0:
 		bet_amount -= 10
 		money += 10
-		update_all()
+	else:
+		money += bet_amount
+		bet_amount = 0
+	update_all()
 
 
 func _on_button_ok_pressed() -> void:
 	if result >= 0:
-		check_result()
+		rounds += 1
+		
+		await check_result()
+		check_rounds()
 		ball = choose_ball()
 		print(ball)
 		for i in $SubViewportContainer/SubViewport/NextBallNode.get_children():
@@ -655,6 +675,8 @@ func _on_button_ok_pressed() -> void:
 			$SubViewportContainer/SubViewport/NextBallNode/HealImage.visible = true
 		elif ball == 2:
 			$SubViewportContainer/SubViewport/NextBallNode/DamageImage.visible = true
+			
+
 
 		return
 		
@@ -672,19 +694,23 @@ func _on_button_ok_pressed() -> void:
 			await get_tree().create_timer(1).timeout
 			$roulette.start_spin()
 			$roulette.start_ball()
-			rounds += 1
-			check_rounds()
+
 			
 func check_rounds():
-	print("itt ", rounds)
 	if rounds % 11 == 0:
+		$dealer.place()
+		await get_tree().create_timer(1).timeout
 		try_spawn_dealer("house")
 		
-	elif rounds % 5 == 0:
+	elif rounds % 7 == 0:
+		$dealer.place()
+		await get_tree().create_timer(1).timeout
 		try_spawn_dealer("bow")
 
-
-	try_spawn_dealer("sword")
+	elif rounds % 3 == 0:
+		$dealer.place()
+		await get_tree().create_timer(1).timeout
+		try_spawn_dealer("sword")
 
 	
 func try_spawn_dealer(item_name: String):
@@ -750,3 +776,6 @@ func _input(event):
 			var music_bus = AudioServer.get_bus_index("Music")
 			var muted = AudioServer.is_bus_mute(music_bus)
 			AudioServer.set_bus_mute(music_bus, !muted)
+			
+		if event.keycode == KEY_R:
+			get_tree().reload_current_scene()

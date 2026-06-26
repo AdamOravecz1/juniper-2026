@@ -60,6 +60,8 @@ func move():
 		$hit.play()
 		await $AnimationPlayer.animation_finished
 		get_parent().get_parent().damage_dealer()
+		get_parent().get_parent().figures.erase(pos)
+		queue_free()
 		return
 		
 	elif side == "dealer" and pos <= 3:
@@ -67,6 +69,8 @@ func move():
 		$hit.play()
 		await $AnimationPlayer.animation_finished 
 		get_parent().get_parent().damage_player()
+		get_parent().get_parent().figures.erase(pos)
+		queue_free()
 		return
 		
 	var tween = get_tree().create_tween()

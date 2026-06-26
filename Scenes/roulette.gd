@@ -40,7 +40,8 @@ func _physics_process(delta: float) -> void:
 
 
 func start_spin():
-	$Spin.play()
+	if $Spin.is_inside_tree():
+		$Spin.play()
 	result = -1
 	get_parent().result = -1
 	color = null
