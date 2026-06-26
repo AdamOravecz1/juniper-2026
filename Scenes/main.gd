@@ -48,6 +48,14 @@ var bet_amount := 0
 var dealer_health = 10
 var player_health = 10
 
+var rounds := 0
+
+var columns = {
+	1: [25, 28, 31, 34],
+	2: [26, 29, 32, 35],
+	3: [27, 30, 33, 36]
+}
+
 var bets = {
 	"red":0,
 	"black":0,
@@ -107,10 +115,10 @@ const STACK_HEIGHT := 0.018
 
 
 func _ready():
-	place_figure(5, sword_model, "player")
-	place_figure(14, bow_model, "dealer")
+
 	update_all()
 	randomize_cards()
+
 
 
 
@@ -171,18 +179,6 @@ func check_result():
 		heal_area(result)
 	elif ball == 2 and result != 0:
 		damage_area(result)
-	elif ball == 3 and result != 0 and n >= 25:
-		place_figure(result, sword_model, "enemy")
-	elif ball == 4 and result != 0 and n <= 12:
-		place_figure(result, sword_model, "player")
-	elif ball == 5 and result != 0 and n >= 25:
-		place_figure(result, bow_model, "enemy")
-	elif ball == 6 and result != 0 and n <= 12:
-		place_figure(result, bow_model, "player")
-	elif ball == 7 and result != 0 and n >= 25:
-		place_figure(result, house_model, "enemy")
-	elif ball == 7 and result != 0 and n <= 12:
-		place_figure(result, house_model, "player")
 		
 	for i in $Figures.get_children():
 		if i.has_method("move"):
@@ -192,7 +188,6 @@ func check_result():
 			await i.move()
 			
 	result = -1
-	
 
 
 
@@ -201,6 +196,7 @@ func place_bet(name):
 	if bet_amount <= 0:
 		return
 
+	$Sounds/down.play()
 	bets[name] += bet_amount
 
 	bet_amount = 0
@@ -211,8 +207,11 @@ func place_bet(name):
 func remove_bet(name):
 
 	money += bets[name]
+	if bets[name] != 0:
+		$Sounds/up.play()
 
 	bets[name] = 0
+
 
 	update_all()
 
@@ -342,10 +341,14 @@ func place_figure(tile_number, model, side):
 			figures[tile_number].queue_free()
 
 
-	var figure = model.instantiate()
+	var figure = sword_model.instantiate()
+	if model == "bow":
+		figure = bow_model.instantiate()
+	elif model == "house":
+		figure = house_model.instantiate()
 	figure.side = side
 	
-	if model == sword_model:
+	if model == "sword" or model == "bow":
 		$Figures.add_child(figure)
 	else:
 		$Buildings.add_child(figure)
@@ -364,7 +367,7 @@ func place_figure(tile_number, model, side):
 	var z = (tile_number - 1) / cols
 
 	var tile_size_x = 0.259
-	var tile_size_z = 0.184
+	var tile_size_z = 0.180
 
 
 	figure.global_position = start + Vector3(
@@ -391,6 +394,22 @@ func spawn_guy(n, side):
 	
 func heal_area(n):
 	var tiles = [n, n + 1, n - 1, n + 3, n - 3]
+	if n == 1:
+		tiles = [n, n + 1, n + 3]
+	elif n == 3:
+		tiles = [n, n - 1, n + 3]
+	elif n == 34:
+		tiles = [n, n + 1, n - 3]
+	elif n == 36:
+		tiles = [n, n - 1, n - 3]
+	elif n == 2:
+		tiles = [n, n + 1, n - 1, n + 3]
+	elif n == 35:
+		tiles = [n, n + 1, n - 1, n - 3]
+	elif n % 3 == 1:
+		tiles = [n, n + 1, n + 3, n - 3]
+	elif n % 3 == 0:
+		tiles = [n, n - 1, n + 3, n - 3]
 	var start = $OnePos.global_position
 	var cols = 3
 	var tile_size_x = 0.259
@@ -413,6 +432,22 @@ func heal_area(n):
 	
 func damage_area(n):
 	var tiles = [n, n + 1, n - 1, n + 3, n - 3]
+	if n == 1:
+		tiles = [n, n + 1, n + 3]
+	elif n == 3:
+		tiles = [n, n - 1, n + 3]
+	elif n == 34:
+		tiles = [n, n + 1, n - 3]
+	elif n == 36:
+		tiles = [n, n - 1, n - 3]
+	elif n == 2:
+		tiles = [n, n + 1, n - 1, n + 3]
+	elif n == 35:
+		tiles = [n, n + 1, n - 1, n - 3]
+	elif n % 3 == 1:
+		tiles = [n, n + 1, n + 3, n - 3]
+	elif n % 3 == 0:
+		tiles = [n, n - 1, n + 3, n - 3]
 	var start = $OnePos.global_position
 	var cols = 3
 	var tile_size_x = 0.259
@@ -541,24 +576,13 @@ func hide_result():
 	
 func choose_ball():
 	var r = randf() # 0.0 - 1.0
-	if r < 0.5:
+	if r < 0.4:
 		return 0
-	elif r < 0.6:
-		return 1
 	elif r < 0.7:
-		return 2
-	elif r < 0.75:
-		return 3
-	elif r < 0.8:
-		return 4
-	elif r < 0.85:
-		return 5
-	elif r < 0.9:
-		return 6
-	elif r < 0.95:
-		return 7
+		return 1
 	else:
-		return 8
+		return 2
+
 
 func damage_dealer():
 	dealer_health -= 1
@@ -631,26 +655,7 @@ func _on_button_ok_pressed() -> void:
 			$SubViewportContainer/SubViewport/NextBallNode/HealImage.visible = true
 		elif ball == 2:
 			$SubViewportContainer/SubViewport/NextBallNode/DamageImage.visible = true
-		elif ball == 3:
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
-		elif ball == 4:
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/SwordImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
-		elif ball == 5:
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
-		elif ball == 6:
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/BowImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
-		elif ball == 7:
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(1.0, 0.0, 0.0, 1.0)
-		elif ball == 8:
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.visible = true
-			$SubViewportContainer/SubViewport/NextBallNode/HouseImage.modulate = Color(0.0, 0.0, 1.0, 1.0)
-			
-		
+
 		return
 		
 	if $roulette.ball_stopped:
@@ -667,6 +672,70 @@ func _on_button_ok_pressed() -> void:
 			await get_tree().create_timer(1).timeout
 			$roulette.start_spin()
 			$roulette.start_ball()
+			rounds += 1
+			check_rounds()
+			
+func check_rounds():
+	print("itt ", rounds)
+	if rounds % 11 == 0:
+		try_spawn_dealer("house")
+		
+	elif rounds % 5 == 0:
+		try_spawn_dealer("bow")
+
+
+	try_spawn_dealer("sword")
+
+	
+func try_spawn_dealer(item_name: String):
+
+	var column_score = {
+		1: {"player": 0, "dealer": 0},
+		2: {"player": 0, "dealer": 0},
+		3: {"player": 0, "dealer": 0}
+	}
+
+	# FULL BOARD SCAN
+	for tile in figures.keys():
+
+		var col = (tile - 1) % 3 + 1
+
+		if figures[tile].side == "player":
+			column_score[col]["player"] += 1
+		elif figures[tile].side == "dealer":
+			column_score[col]["dealer"] += 1
+
+
+	# PICK ADVANTAGE COLUMNS
+	var best_columns = []
+
+	for col in column_score.keys():
+		if column_score[col]["player"] > column_score[col]["dealer"]:
+			best_columns.append(col)
+
+	# fallback if no advantage columns
+	if best_columns.is_empty():
+		best_columns = [1, 2, 3]
+
+	best_columns.shuffle()
+
+
+	# TRY PLACE IN BOTTOM 4 ONLY
+	for col in best_columns:
+
+		var available = []
+
+		for tile in columns[col]:
+			if !figures.has(tile):
+				available.append(tile)
+
+		if available.is_empty():
+			continue
+
+		var chosen_tile = available.pick_random()
+
+		place_figure(chosen_tile, item_name, "dealer")
+		return
 			
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
