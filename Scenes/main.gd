@@ -194,10 +194,13 @@ func check_result():
 		print(i)
 		if i:
 			if i.has_method("move"):
+				await get_tree().process_frame
 				await i.move()
 	for i in $Buildings.get_children():
 		if i:
 			if i.has_method("move"):
+				await get_tree().process_frame
+
 				await i.move()
 	
 
